@@ -1,0 +1,800 @@
+[
+  {
+    "id": 1,
+    "name": "Surat al fatiha",
+    "latin": "pembuka",
+    "terjemahan": "7 ayat",
+    "suara": "alfatiha.mp3"
+  },
+  {
+    "id": 2,
+    "name": "Surat al baqarah",
+    "latin": "Sapi Betina",
+    "terjemahan": "286 ayat",
+    "suara": "albaqarah.mp3"
+  },
+  {
+    "id": 3,
+    "name": "Surat al imran",
+    "latin": "Keluarga imran",
+    "terjemahan": "200 ayat",
+    "suara": "alimran.mp3"
+  },
+  {
+    "id": 4,
+    "name": "Surat an nisa",
+    "latin": "Wanita",
+    "terjemahan": "176 ayat",
+    "suara": "annisa.mp3"
+  },
+  {
+    "id": 5,
+    "name": "Surat al ma'idah",
+    "latin": "Jamuan",
+    "terjemahan": "120 ayat",
+    "suara": "almaidah.mp3"
+  },
+  {
+    "id": 6,
+    "name": "Surat al an'am",
+    "latin": "Hewan ternak",
+    "terjemahan": "165 ayat",
+    "suara": "alannam.mp3"
+  },
+  {
+    "id": 7,
+    "name": "Surat al a'raf",
+    "latin": "Tempat yang tertinggi",
+    "terjemahan": "206 ayat",
+    "suara": "alaraf.mp3"
+  },
+  {
+    "id": 8,
+    "name": "Surat al anfal",
+    "latin": "Harta rampasan perang",
+    "terjemahan": "75 ayat",
+    "suara": "alanfal.mp3"
+  },
+  {
+    "id": 9,
+    "name": "Surat at taubah",
+    "latin": "Pengampunan",
+    "terjemahan": "129 ayat",
+    "suara": "ataubah.mp3"
+  },
+  {
+    "id": 10,
+    "name": "Surat yunus",
+    "latin": "Nabi yunus",
+    "terjemahan": "109 ayat",
+    "suara": "yunus.mp3"
+  },
+  {
+    "id": 11,
+    "name": "Surat Hud",
+    "latin": "Nabi hud",
+    "terjemahan": "123 ayat",
+    "suara": "hud.mp3"
+  },
+  {
+    "id": 12,
+    "name": "Surat yusuf",
+    "latin": "Nabi yusuf",
+    "terjemahan": "111 ayat",
+    "suara": "yusuf.mp3"
+  },
+  {
+    "id": 13,
+    "name": "Surat ar rad",
+    "latin": "Guruh",
+    "terjemahan": "43 ayat",
+    "suara": "rad.mp3"
+  },
+  {
+    "id": 14,
+    "name": "Surat ibrahim",
+    "latin": "Nabi ibrahim",
+    "terjemahan": "5 ayat",
+    "suara": "ibrahim.mp3"
+  },
+  {
+    "id": 15,
+    "name": "Surat al hijr",
+    "latin": "Gunung al hijr",
+    "terjemahan": "99 ayat",
+    "suara": "alhijr.mp3"
+  },
+  {
+    "id": 16,
+    "name": "Surat an nahl",
+    "latin": "lebah",
+    "terjemahan": "128 ayat",
+    "suara": "annahl.mp3"
+  },
+  {
+    "id": 17,
+    "name": "Surat al isra'",
+    "latin": "Perjalanan malam",
+    "terjemahan": "111 ayat",
+    "suara": "alisra'.mp3"
+  },
+  {
+    "id": 18,
+    "name": "Surat al kahf",
+    "latin": "Penghuni-penghuni gua",
+    "terjemahan": "110 ayat",
+    "suara": "alkahf.mp3"
+  },
+  {
+    "id": 19,
+    "name": "Surat maryam",
+    "latin": "maryam",
+    "terjemahan": "98 ayat",
+    "suara": "maryam.mp3"
+  },
+  {
+    "id": 20,
+    "name": "Surat Ta ha",
+    "latin": "Ta ha",
+    "terjemahan": "135 ayat",
+    "suara": "taha.mp3"
+  },
+  {
+    "id": 21,
+    "name": "Surat al anbiya",
+    "latin": "Nabi-nabi",
+    "terjemahan": "112 ayat",
+    "suara": ".mp3"
+  },
+  {
+    "id": 22,
+    "name": "Surat al hajj",
+    "latin": "Haji",
+    "terjemahan": "78 ayat",
+    "suara": "alhajj.mp3"
+  },
+  {
+    "id": 23,
+    "name": "Surat al mu'minun",
+    "latin": "orang-orang mukmin",
+    "terjemahan": "118 ayat",
+    "suara": "almukiminin.mp3"
+  },
+  {
+    "id": 24,
+    "name": "Surat an nur",
+    "latin": "cahaya",
+    "terjemahan": "64 ayat",
+    "suara": "annur.mp3"
+  },
+  {
+    "id": 25,
+    "name": "Surat al furqan",
+    "latin": "Pembeda",
+    "terjemahan": "77 ayat",
+    "suara": "alfurqan.mp3"
+  },
+  {
+    "id": 26,
+    "name": "Surat asy syu'ara",
+    "latin": "Penyair",
+    "terjemahan": "227 ayat",
+    "suara": "asshura.mp3"
+  },
+  {
+    "id": 27,
+    "name": "Surat an naml",
+    "latin": "Semut",
+    "terjemahan": "93 ayat",
+    "suara": "annaml.mp3"
+  },
+  {
+    "id": 28,
+    "name": "Surat al qasas",
+    "latin": "kisah-kisah",
+    "terjemahan": "88 ayat",
+    "suara": "alqasas.mp3"
+  },
+  {
+    "id": 29,
+    "name": "Surat al ankabut",
+    "latin": "Laba-laba",
+    "terjemahan": "69 ayat",
+    "suara": "alankabut.mp3"
+  },
+  {
+    "id": 30,
+    "name": "Surat ar rum",
+    "latin": "Bangsa Romawi",
+    "terjemahan": "60 ayat",
+    "suara": "arrum.mp3"
+  },
+  {
+    "id": 31,
+    "name": "Surat luqman",
+    "latin": "Keluarga luqman",
+    "terjemahan": "34 ayat",
+    "suara": "alluqman.mp3"
+  },
+  {
+    "id": 32,
+    "name": "Surat as sajdah",
+    "latin": "Sajdah",
+    "terjemahan": "30 ayat",
+    "suara": "assajdah.mp3"
+  },
+  {
+    "id": 33,
+    "name": "Surat al ahzab",
+    "latin": "Golongan-golongan yang bersekutu",
+    "terjemahan": "73 ayat",
+    "suara": "alahzab.mp3"
+  },
+  {
+    "id": 34,
+    "name": "Surat saba'",
+    "latin": "Kaum saba'",
+    "terjemahan": "54 ayat",
+    "suara": "assaba.mp3"
+  },
+  {
+    "id": 35,
+    "name": "Surat fatir",
+    "latin": "Pencipta",
+    "terjemahan": "45 ayat",
+    "suara": "fatir.mp3"
+  },
+  {
+    "id": 36,
+    "name": "Surat yasin",
+    "latin": "Yasin",
+    "terjemahan": "83 ayat",
+    "suara": "yasin.mp3"
+  },
+  {
+    "id": 37,
+    "name": "Surat as saffat",
+    "latin": "Barisan-barisan",
+    "terjemahan": "182 ayat",
+    "suara": "assafat.mp3"
+  },
+  {
+    "id": 38,
+    "name": "Surat sad",
+    "latin": "Sad",
+    "terjemahan": "88 ayat",
+    "suara": "sad.mp3"
+  },
+  {
+    "id": 39,
+    "name": "Surat az zumar",
+    "latin": "Rombongan",
+    "terjemahan": "75 ayat",
+    "suara": "azzumar.mp3"
+  },
+  {
+    "id": 40,
+    "name": "Surat ghafir",
+    "latin": "Yang mengampuni",
+    "terjemahan": "85 ayat",
+    "suara": "ghafir.mp3"
+  },
+  {
+    "id": 41,
+    "name": "Surat fussilat",
+    "latin": "YAng dijelaskan",
+    "terjemahan": "54 ayat",
+    "suara": "fusilat.mp3"
+  },
+  {
+    "id": 42,
+    "name": "Surat asy syura",
+    "latin": "Musyawarah",
+    "terjemahan": "53 ayat",
+    "suara": "asyura.mp3"
+  },
+  {
+    "id": 43,
+    "name": "Surat az zukhruf",
+    "latin": "Perhiasan",
+    "terjemahan": "89 ayat",
+    "suara": "azzukhruf.mp3"
+  },
+  {
+    "id": 44,
+    "name": "Surat ad dukhan",
+    "latin": "Kabut",
+    "terjemahan": "59 ayat",
+    "suara": ".mp3"
+  },
+  {
+    "id": 45,
+    "name": "Surat al jasiyah",
+    "latin": "Yang bertekuk lutut",
+    "terjemahan": "37 ayat",
+    "suara": "aljasiyah.mp3"
+  },
+  {
+    "id": 46,
+    "name": "Surat al ahqaf",
+    "latin": "Bukit-bukit pasir",
+    "terjemahan": "45 ayat",
+    "suara": "alahqaf.mp3"
+  },
+  {
+    "id": 47,
+    "name": "Surat muhammad",
+    "latin": "Nabi muhammad",
+    "terjemahan": "38 ayat",
+    "suara": "muhammad.mp3"
+  },
+  {
+    "id": 48,
+    "name": "Surat al fath",
+    "latin": "kemenangan",
+    "terjemahan": "29 ayat",
+    "suara": "alfath.mp3"
+  },
+  {
+    "id": 49,
+    "name": "Surat al hujurat",
+    "latin": "Kamar-kamar",
+    "terjemahan": "18 ayat",
+    "suara": "alhujrat.mp3"
+  },
+  {
+    "id": 50,
+    "name": "Surat qaf",
+    "latin": "Qaf",
+    "terjemahan": "45 ayat",
+    "suara": "qaf.mp3"
+  },
+  {
+    "id": 51,
+    "name": "Surat az zariyat",
+    "latin": "Angin yang menerbangkan",
+    "terjemahan": "60 ayat",
+    "suara": "adhriyat.mp3"
+  },
+  {
+    "id": 52,
+    "name": "Surat at tur",
+    "latin": "Bukit",
+    "terjemahan": "49 ayat",
+    "suara": "attur.mp3"
+  },
+  {
+    "id": 53,
+    "name": "Surat an najm",
+    "latin": "Bintang",
+    "terjemahan": "62 ayat",
+    "suara": "annajm.mp3"
+  },
+  {
+    "id": 54,
+    "name": "Surat al qamar",
+    "latin": "Bulan",
+    "terjemahan": "55 ayat",
+    "suara": "alqamar.mp3"
+  },
+  {
+    "id": 55,
+    "name": "Surat ar rahman",
+    "latin": "Yang maha pemurah",
+    "terjemahan": "78 ayat",
+    "suara": "arrahman.mp3"
+  },
+  {
+    "id": 56,
+    "name": "Surat al waqiah",
+    "latin": "Hari qiamat",
+    "terjemahan": "96 ayat",
+    "suara": "alwaqiah.mp3"
+  },
+  {
+    "id": 57,
+    "name": "Surat al hadid",
+    "latin": "Besi",
+    "terjemahan": "29 ayat",
+    "suara": "alhadid.mp3"
+  },
+  {
+    "id": 58,
+    "name": "Surat al mujadilah",
+    "latin": "Gugatan",
+    "terjemahan": "22 ayat",
+    "suara": "almujadilah.mp3"
+  },
+  {
+    "id": 59,
+    "name": "Surat al hasyr",
+    "latin": "pengusiran",
+    "terjemahan": "24 ayat",
+    "suara": "alhasyr.mp3"
+  },
+  {
+    "id": 60,
+    "name": "Surat mumtahanah",
+    "latin": "Wanita yang diuji",
+    "terjemahan": "13 ayat",
+    "suara": "almumtahina.mp3"
+  },
+  {
+    "id": 61,
+    "name": "Surat as saff",
+    "latin": "Barisan",
+    "terjemahan": "14 ayat",
+    "suara": "assaf.mp3"
+  },
+  {
+    "id": 62,
+    "name": "Surat al jumu'ah",
+    "latin": "Hari jum'at",
+    "terjemahan": "11 ayat",
+    "suara": "aljumuah.mp3"
+  },
+  {
+    "id": 63,
+    "name": "Surat al munafiqun",
+    "latin": "orang-orang yang munafiq",
+    "terjemahan": "11 ayat",
+    "suara": "almunafiq.mp3"
+  },
+  {
+    "id": 64,
+    "name": "Surat at taghobun",
+    "latin": "Hai dinampakan kesalahan-kesalahan",
+    "terjemahan": "18 ayat",
+    "suara": "attaghobu.mp3"
+  },
+  {
+    "id": 65,
+    "name": "Surat at talaq",
+    "latin": "talak",
+    "terjemahan": "12 ayat",
+    "suara": "attalaq.mp3"
+  },
+  {
+    "id": 66,
+    "name": "Surat at tahrim",
+    "latin": "Pengharaman",
+    "terjemahan": "12 ayat",
+    "suara": "attahrim.mp3"
+  },
+  {
+    "id": 67,
+    "name": "Surat aal mulk",
+    "latin": "Kerajaan",
+    "terjemahan": "30 ayat",
+    "suara": "almulk.mp3"
+  },
+  {
+    "id": 68,
+    "name": "Surat aal qalam",
+    "latin": "Pena",
+    "terjemahan": "52 ayat",
+    "suara": "alqalam.mp3"
+  },
+  {
+    "id": 69,
+    "name": "Surat al haqqah",
+    "latin": "Hari kiamat",
+    "terjemahan": "52 ayat",
+    "suara": "alhaqah.mp3"
+  },
+  {
+    "id": 70,
+    "name": "Surat al maarij",
+    "latin": "Tempat naik",
+    "terjemahan": "75 ayat",
+    "suara": "almaarij.mp3"
+  },
+  {
+    "id": 71,
+    "name": "Surat nuh",
+    "latin": "Nabi nuh",
+    "terjemahan": "28 ayat",
+    "suara": "nuh.mp3"
+  },
+  {
+    "id": 72,
+    "name": "Surat al jinn",
+    "latin": "Jin",
+    "terjemahan": "28 ayat",
+    "suara": "aljin.mp3"
+  },
+  {
+    "id": 73,
+    "name": "Surat al muzammil",
+    "latin": "Orang yang berkelumun",
+    "terjemahan": "20 ayat",
+    "suara": "almuzamil.mp3"
+  },
+  {
+    "id": 74,
+    "name": "Surat al mudassir",
+    "latin": "Orang yang berselimut",
+    "terjemahan": "56 ayat",
+    "suara": "almudhattir.mp3"
+  },
+  {
+    "id": 75,
+    "name": "Surat al qiamah",
+    "latin": "kiamat",
+    "terjemahan": "40 ayat",
+    "suara": "alqiamah.mp3"
+  },
+  {
+    "id": 76,
+    "name": "Surat al insan",
+    "latin": "Manusia",
+    "terjemahan": "31 ayat",
+    "suara": "alinsan.mp3"
+  },
+  {
+    "id": 77,
+    "name": "Surat al mursalat",
+    "latin": "Malaikat-malaikat yang diutus",
+    "terjemahan": "50 ayat",
+    "suara": "almursalat.mp3"
+  },
+  {
+    "id": 78,
+    "name": "Surat an naba'",
+    "latin": "Berita besar",
+    "terjemahan": "40 ayat",
+    "suara": "annaba.mp3"
+  },
+  {
+    "id": 79,
+    "name": "Surat an naziat",
+    "latin": "Yang mencabut dengan  keras",
+    "terjemahan": "46 ayat",
+    "suara": "annaziat.mp3"
+  },
+  {
+    "id": 80,
+    "name": "Surat abasa",
+    "latin": "Bermuka masam",
+    "terjemahan": "42 ayat",
+    "suara": "abasa.mp3"
+  },
+  {
+    "id": 81,
+    "name": "Surat at takwir ",
+    "latin": "Menggulung",
+    "terjemahan": " 29 ayat",
+    "suara": "attakwir.mp3"
+  },
+  {
+    "id": 82,
+    "name": "Surat al infitar",
+    "latin": "Terbelah",
+    "terjemahan": "19 ayat",
+    "suara": "alinfitar.mp3"
+  },
+  {
+    "id": 83,
+    "name": "Surat al mutaffifin ",
+    "latin": "Orang-orang yang curang",
+    "terjemahan": " 36 ayat",
+    "suara": "alumtafifin.mp3"
+  },
+  {
+    "id": 84,
+    "name": "Surat al insyiqaq",
+    "latin": "Terbelah",
+    "terjemahan": "25 ayat",
+    "suara": "alinsyiqaq.mp3"
+  },
+  {
+    "id": 85,
+    "name": "Surat al buruj ",
+    "latin": "Gugusan bintang",
+    "terjemahan": "22 ayat",
+    "suara": "alburuj.mp3"
+  },
+  {
+    "id": 86,
+    "name": "Surat at tariq",
+    "latin": "YAng datang di malam hari",
+    "terjemahan": "17 ayat",
+    "suara": "attariq.mp3"
+  },
+  {
+    "id": 87,
+    "name": "Surat al a'la",
+    "latin": "Maha tinggi",
+    "terjemahan": "19 ayat",
+    "suara": "alala.mp3"
+  },
+  {
+    "id": 88,
+    "name": "Surat al ghasyiyah ",
+    "latin": "Hari pembalasan",
+    "terjemahan": "26 ayat",
+    "suara": "alghasiyah.mp3"
+  },
+  {
+    "id": 89,
+    "name": "Surat al fajr ",
+    "latin": "Fajar",
+    "terjemahan": "30 ayat",
+    "suara": "alfajr.mp3"
+  },
+  {
+    "id": 90,
+    "name": "Surat al balad ",
+    "latin": "Negeri",
+    "terjemahan": "20 ayat",
+    "suara": "albalad.mp3"
+  },
+  {
+    "id": 91,
+    "name": "Surat asy syams ",
+    "latin": "Matahari",
+    "terjemahan": "15 ayat",
+    "suara": "asyam.mp3"
+  },
+  {
+    "id": 92,
+    "name": "Surat al lail",
+    "latin": "Malam",
+    "terjemahan": "21 ayat",
+    "suara": "allail.mp3"
+  },
+  {
+    "id": 93,
+    "name": "Surat ad dhuha ",
+    "latin": "Dhuha",
+    "terjemahan": "11 ayat",
+    "suara": "adduha.mp3"
+  },
+  {
+    "id": 94,
+    "name": "Surat al insyirah ",
+    "latin": "Melapangkan",
+    "terjemahan": "8 ayat",
+    "suara": "alinsirah.mp3"
+  },
+  {
+    "id": 95,
+    "name": "Surat at tin",
+    "latin": "Buah tin",
+    "terjemahan": "8 ayat",
+    "suara": "attin.mp3"
+  },
+  {
+    "id": 96,
+    "name": "Surat al alaq",
+    "latin": "SEgumpal darah",
+    "terjemahan": "19 ayat",
+    "suara": "alalaq.mp3"
+  },
+  {
+    "id": 97,
+    "name": "Surat al qadr",
+    "latin": "Kemuliaan",
+    "terjemahan": "5 ayat",
+    "suara": "alqadr.mp3"
+  },
+  {
+    "id": 98,
+    "name": "Surat al bayyinah",
+    "latin": "Pembuktian",
+    "terjemahan": "8 ayat",
+    "suara": "albayyinah.mp3"
+  },
+  {
+    "id": 99,
+    "name": "Surat az zalzalah",
+    "latin": "Kegoncangan",
+    "terjemahan": " 8 ayat",
+    "suara": "azzalzalah.mp3"
+  },
+  {
+    "id": 100,
+    "name": "Surat al adiyat",
+    "latin": "Kuda perang yang berlari kencang",
+    "terjemahan": "11 ayat",
+    "suara": "aladiyat.mp3"
+  },
+  {
+    "id": 101,
+    "name": "Surat al qariah",
+    "latin": "Hari Kiamat yang menggentarkan",
+    "terjemahan": "11 ayat",
+    "suara": "alqariah.mp3"
+  },
+  {
+    "id": 102,
+    "name": "Surat at takasur",
+    "latin": "Bermegah-megahan",
+    "terjemahan": "8 ayat",
+    "suara": "attakasur.mp3"
+  },
+  {
+    "id": 103,
+    "name": "Surat al asr",
+    "latin": "Masa",
+    "terjemahan": "3 ayat",
+    "suara": "alasr.mp3"
+  },
+  {
+    "id": 104,
+    "name": "Surat al humazah",
+    "latin": "Pengumpat",
+    "terjemahan": " 9 ayat",
+    "suara": "alhumazah.mp3"
+  },
+  {
+    "id": 105,
+    "name": "Surat al fil",
+    "latin": "Gajah",
+    "terjemahan": "5 ayat",
+    "suara": "alfil.mp3"
+  },
+  {
+    "id": 106,
+    "name": "Surat al quraisy",
+    "latin": "Suku quraisy",
+    "terjemahan": " 4 ayat",
+    "suara": "alquraisy.mp3"
+  },
+  {
+    "id": 107,
+    "name": "Surat al maun",
+    "latin": "Bantuan",
+    "terjemahan": "7 ayat",
+    "suara": "almaun.mp3"
+  },
+  {
+    "id": 108,
+    "name": "Surat al kautsar ",
+    "latin": "Nikmat yang berlimpah",
+    "terjemahan": "3 ayat",
+    "suara": "alkausar.mp3"
+  },
+  {
+    "id": 109,
+    "name": "Surat al kafirun",
+    "latin": "orang-orang kafir",
+    "terjemahan": "6 ayat",
+    "suara": "alkafirun.mp3"
+  },
+  {
+    "id": 110,
+    "name": "Surat an nasr",
+    "latin": "Pertolongan",
+    "terjemahan": "3 ayat",
+    "suara": "annasr.mp3"
+  },
+  {
+    "id": 111,
+    "name": "Surat al lahab",
+    "latin": "Gejolak api",
+    "terjemahan": "5 ayat",
+    "suara": "alahab.mp3"
+  },
+  {
+    "id": 112,
+    "name": "Surat al ikhlas",
+    "latin": "Ikhlas",
+    "terjemahan": "4 ayat",
+    "suara": "alikhlas.mp3"
+  },
+  {
+    "id": 113,
+    "name": "Surat al falaq",
+    "latin": "Waktu fajar",
+    "terjemahan": "5 ayat",
+    "suara": "alfalaq.mp3"
+  },
+  {
+    "id": 114,
+    "name": "Surat an nas",
+    "latin": "Manusia",
+    "terjemahan": "6 ayat",
+    "suara": "annas.mp3"
+  }
+]

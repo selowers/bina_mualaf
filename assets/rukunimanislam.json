@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "name": "Rukun Islam 1 Syahadat",
+    "latin": "Mengucapkan dan meyakini dua kalimat syahadat: Asyhadu an laa ilaaha illallah, wa asyhadu anna Muhammadar rasulullah(Aku bersaksi bahwa tiada Tuhan selain Allah, dan aku bersaksi bahwa Muhammad adalah utusan Allah).",
+    "terjemahan": "Maknanya : Mengikrarkan kalimat syahadat berarti seorang Muslim mengakui keesaan Allah sebagai Tuhan yang disembah dan kebenaran risalah Nabi Muhammad SAW. Syahadat adalah pintu masuk Islam dan inti dari keimanan seorang Muslim."
+  },
+  {
+    "id": 2,
+    "name": "Rukun Islam 2 Sholat",
+    "latin": "Mendirikan salat lima waktu sehari semalam sebagai bentuk ibadah dan hubungan langsung dengan Allah. Salat merupakan tiang agama yang harus ditegakkan oleh setiap Muslim.",
+    "terjemahan": "Maknanya : Salat adalah wujud ketaatan dan komunikasi langsung dengan Allah, memberikan ketenangan jiwa, dan menjaga manusia dari perbuatan keji dan mungkar. Salat juga melatih kedisiplinan waktu dan keikhlasan dalam beribadah."
+  },
+  {
+    "id": 3,
+    "name": "Rukun Islam 3 Zakat",
+    "latin": "Menunaikan zakat sebagai kewajiban sosial untuk membantu orang yang membutuhkan. Zakat terdiri dari zakat fitrah dan zakat mal.",
+    "terjemahan": "Maknanya : Zakat membersihkan harta dan jiwa dari sifat kikir serta menanamkan rasa empati kepada sesama.Zakat membantu mewujudkan keadilan sosial dan mengurangi kesenjangan ekonomi."
+  },
+  {
+    "id": 4,
+    "name": "Rukun Islam 4 Puasa",
+    "latin": "Menahan diri dari makan, minum, dan segala yang membatalkan dari terbit fajar hingga terbenam matahari selama bulan Ramadan.",
+    "terjemahan": "Maknanya : Puasa melatih kesabaran, pengendalian diri, dan ketakwaan kepada Allah. Mengajarkan solidaritas kepada kaum fakir miskin karena merasakan lapar dan haus yang mereka alami."
+  },
+  {
+    "id": 5,
+    "name": "Rukun Islam 5 Hajji",
+    "latin": "Melaksanakan ibadah haji ke Baitullah di Makkah bagi yang mampu secara fisik, finansial, dan logistik, setidaknya sekali seumur hidup.",
+    "terjemahan": "Maknanya : Haji adalah simbol persatuan umat Islam, tanpa memandang ras, warna kulit, atau status sosial. Melalui haji, seorang Muslim menghayati pengorbanan, pengabdian, dan ketundukan total kepada Allah."
+  },
+  {
+    "id": 6,
+    "name": "Rukun Iman 1 Kepada Allah",
+    "latin": "Meyakini bahwa Allah adalah Tuhan Yang Maha Esa, Pencipta alam semesta, dan tidak ada sekutu bagi-Nya. Allah memiliki sifat-sifat yang sempurna dan suci dari segala kekurangan.",
+    "terjemahan": "Maknanya :Meyakini keesaan Allah menjadikan manusia menyadari bahwa segala sesuatu yang ada di alam semesta adalah ciptaan-Nya. Ini menanamkan rasa tawakal (berserah diri), syukur, dan takut kepada Allah. Mengajarkan bahwa Allah memiliki sifat-sifat sempurna seperti Maha Pengasih, Maha Kuasa, dan Maha Mengetahui."
+  },
+  {
+    "id": 7,
+    "name": "Rukun Iman 2 Kepada Malaikat",
+    "latin": "Meyakini keberadaan malaikat sebagai makhluk Allah yang diciptakan dari cahaya, tidak memiliki sifat manusia, dan selalu taat kepada perintah Allah. Setiap malaikat memiliki tugas tertentu, seperti Jibril yang menyampaikan wahyu, dan Mikail yang mengatur rezeki.",
+    "terjemahan": "Maknanya :Memahami keberadaan malaikat mendorong seseorang untuk selalu berhati-hati dalam perbuatan, karena malaikat mencatat amal baik dan buruk. Malaikat adalah bukti kekuasaan Allah dan penjaga keteraturan ciptaan-Nya."
+  },
+  {
+    "id": 8,
+    "name": "Rukun Iman 3 Kepada Kitab Suci",
+    "latin": "Meyakini bahwa Allah menurunkan kitab-kitab suci sebagai petunjuk bagi manusia. Kitab-kitab tersebut adalah: 1. Taurat (diturunkan kepada Nabi Musa) 2. Zabur (diturunkan kepada Nabi Daud) 3.Injil (diturunkan kepada Nabi Isa) 4. Al-Qur'an (diturunkan kepada Nabi Muhammad SAW sebagai penyempurna).",
+    "terjemahan": "Maknanya :Meyakini kitab-kitab suci adalah pedoman hidup manusia. Al-Qur'an, sebagai kitab terakhir, mengandung ajaran yang lengkap untuk kebahagiaan dunia dan akhirat. Mengajarkan penghormatan terhadap wahyu Allah yang diturunkan untuk membimbing manusia."
+  },
+  {
+    "id": 9,
+    "name": "Rukun Iman 4 Kepada Rasul",
+    "latin": "Meyakini bahwa Allah mengutus nabi dan rasul untuk membimbing manusia ke jalan yang benar. Ada 25 nabi yang disebutkan dalam Al-Qur'an, dengan Nabi Muhammad SAW sebagai penutup para nabi.",
+    "terjemahan": "Maknanya :Meyakini para nabi dan rasul sebagai utusan Allah mengajarkan kita untuk meneladani sifat-sifat mereka seperti jujur, sabar, dan amanah. Memahami misi kenabian sebagai bentuk kasih sayang Allah kepada manusia."
+  },
+  {
+    "id": 10,
+    "name": "Rukun Iman 5 Kepada Hari Akhir",
+    "latin": "Meyakini adanya kehidupan setelah mati, termasuk peristiwa kiamat, kebangkitan, hisab, surga, dan neraka.",
+    "terjemahan": "Maknanya :Keyakinan ini menanamkan rasa tanggung jawab dan motivasi untuk berbuat baik karena segala amal akan dihisab di akhirat. Menumbuhkan rasa harap (raja') kepada rahmat Allah dan rasa takut (khauf) kepada siksa-Nya."
+  },
+  {
+    "id": 11,
+    "name": "Rukun Iman 6 Kepada Qadha dan Qadar",
+    "latin": "Meyakini bahwa segala sesuatu yang terjadi adalah ketetapan Allah, baik itu takdir yang baik maupun buruk, yang semuanya berada dalam ilmu dan kehendak-Nya.",
+    "terjemahan": "Maknanya :Meyakini takdir Allah menanamkan sikap ridha (rela) terhadap apa yang Allah tetapkan, baik itu ujian atau nikmat. Membantu manusia bersikap sabar dalam kesulitan dan tidak sombong dalam keberhasilan."
+  }
+]
