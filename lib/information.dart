@@ -19,7 +19,6 @@ class _InformasiState extends State<Informasi> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // ... Your existing code ...
-
             ElevatedButton(
               onPressed: () {
                 showDialog(
