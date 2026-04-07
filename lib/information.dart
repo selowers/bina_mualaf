@@ -27,16 +27,17 @@ class ConsultationMessage {
   });
 
   Map<String, dynamic> toJson() => {
-        'conversationId': conversationId,
-        'senderId': senderId,
-        'senderName': senderName,
-        'senderRole': senderRole,
-        'content': content,
-        'voicePath': voicePath,
-        'timestamp': timestamp,
-      };
+    'conversationId': conversationId,
+    'senderId': senderId,
+    'senderName': senderName,
+    'senderRole': senderRole,
+    'content': content,
+    'voicePath': voicePath,
+    'timestamp': timestamp,
+  };
 
-  factory ConsultationMessage.fromJson(Map<String, dynamic> json) => ConsultationMessage(
+  factory ConsultationMessage.fromJson(Map<String, dynamic> json) =>
+      ConsultationMessage(
         conversationId: json['conversationId'],
         senderId: json['senderId'],
         senderName: json['senderName'],
@@ -61,7 +62,8 @@ class _InformasiState extends State<Informasi> {
   final AudioPlayer _player = AudioPlayer();
   User? _currentUser;
   List<User> _allUsers = [];
-  List<User> get _pembimbingUsers => _allUsers.where((user) => user.role == 'pembimbing').toList();
+  List<User> get _pembimbingUsers =>
+      _allUsers.where((user) => user.role == 'pembimbing').toList();
 
   Future<void> _loadAllUsers() async {
     final prefs = await SharedPreferences.getInstance();
@@ -77,6 +79,7 @@ class _InformasiState extends State<Informasi> {
       _loadConversations();
     }
   }
+
   List<ConsultationMessage> _messages = [];
   List<ConsultationMessage> _allMessages = [];
   List<String> _conversations = []; // For pembimbing: list of conversation IDs
@@ -111,7 +114,9 @@ class _InformasiState extends State<Informasi> {
 
   Future<void> _loadConversations() async {
     // Get all calon mualaf users
-    final calonMualafUsers = _allUsers.where((user) => user.role == 'calon_mualaf').toList();
+    final calonMualafUsers = _allUsers
+        .where((user) => user.role == 'calon_mualaf')
+        .toList();
 
     // Create conversation IDs for all calon mualaf (whether they have messages or not)
     final conversations = calonMualafUsers
@@ -139,28 +144,35 @@ class _InformasiState extends State<Informasi> {
 
   void _updateMessagesForCurrentConversation() {
     if (_currentConversationId != null) {
-      _messages = _allMessages
-          .where((msg) => msg.conversationId == _currentConversationId)
-          .toList()
-        ..sort((a, b) => DateTime.parse(a.timestamp).compareTo(DateTime.parse(b.timestamp)));
+      _messages =
+          _allMessages
+              .where((msg) => msg.conversationId == _currentConversationId)
+              .toList()
+            ..sort(
+              (a, b) => DateTime.parse(
+                a.timestamp,
+              ).compareTo(DateTime.parse(b.timestamp)),
+            );
     } else {
       _messages = [];
     }
     setState(() {});
   }
 
-
-
   Future<void> _saveAllMessages() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_prefsKey, json.encode(_allMessages.map((m) => m.toJson()).toList()));
+    await prefs.setString(
+      _prefsKey,
+      json.encode(_allMessages.map((m) => m.toJson()).toList()),
+    );
   }
 
   Future<void> _startRecording() async {
     try {
       if (await _recorder.hasPermission()) {
         final directory = await getApplicationDocumentsDirectory();
-        final filePath = '${directory.path}/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
+        final filePath =
+            '${directory.path}/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
         await _recorder.start(const RecordConfig(), path: filePath);
         setState(() {
           _isRecording = true;
@@ -177,7 +189,9 @@ class _InformasiState extends State<Informasi> {
       setState(() {
         _isRecording = false;
       });
-      if (path != null && _currentUser != null && _currentConversationId != null) {
+      if (path != null &&
+          _currentUser != null &&
+          _currentConversationId != null) {
         final message = ConsultationMessage(
           conversationId: _currentConversationId!,
           senderId: _currentUser!.id,
@@ -229,7 +243,8 @@ class _InformasiState extends State<Informasi> {
 
   void _sendMessage() {
     final text = _messageController.text.trim();
-    if (text.isEmpty || _currentUser == null || _currentConversationId == null) return;
+    if (text.isEmpty || _currentUser == null || _currentConversationId == null)
+      return;
 
     final message = ConsultationMessage(
       conversationId: _currentConversationId!,
@@ -254,8 +269,11 @@ class _InformasiState extends State<Informasi> {
   }
 
   Widget _buildChatBubble(ConsultationMessage message) {
-    final isCurrentUser = _currentUser != null && message.senderId == _currentUser!.id;
-    final alignment = isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+    final isCurrentUser =
+        _currentUser != null && message.senderId == _currentUser!.id;
+    final alignment = isCurrentUser
+        ? Alignment.centerRight
+        : Alignment.centerLeft;
     final bubbleColor = isCurrentUser ? Colors.blueAccent : Colors.white;
     final textColor = isCurrentUser ? Colors.white : Colors.black87;
 
@@ -277,8 +295,9 @@ class _InformasiState extends State<Informasi> {
           ],
         ),
         child: Column(
-          crossAxisAlignment:
-              isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: isCurrentUser
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
           children: [
             Text(
               message.senderName,
@@ -295,7 +314,9 @@ class _InformasiState extends State<Informasi> {
                 children: [
                   IconButton(
                     icon: Icon(
-                      _currentPlayingVoice == message.voicePath ? Icons.stop : Icons.play_arrow,
+                      _currentPlayingVoice == message.voicePath
+                          ? Icons.stop
+                          : Icons.play_arrow,
                       color: textColor,
                     ),
                     onPressed: () => _playVoice(message.voicePath!),
@@ -314,7 +335,10 @@ class _InformasiState extends State<Informasi> {
             const SizedBox(height: 6),
             Text(
               '${DateTime.parse(message.timestamp).hour.toString().padLeft(2, '0')}:${DateTime.parse(message.timestamp).minute.toString().padLeft(2, '0')}',
-              style: TextStyle(color: textColor.withAlpha((0.7 * 255).round()), fontSize: 12),
+              style: TextStyle(
+                color: textColor.withAlpha((0.7 * 255).round()),
+                fontSize: 12,
+              ),
             ),
           ],
         ),
@@ -334,18 +358,18 @@ class _InformasiState extends State<Informasi> {
   @override
   Widget build(BuildContext context) {
     if (_currentUser == null) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
       backgroundColor: const Color(0xff44aca0),
       appBar: AppBar(
         backgroundColor: const Color(0xff318c7b),
-        title: Text(_currentUser!.role == 'pembimbing'
-            ? 'Konsultasi - ${_currentUser!.nama}'
-            : 'Chat dengan Pembimbing'),
+        title: Text(
+          _currentUser!.role == 'pembimbing'
+              ? 'Konsultasi - ${_currentUser!.nama}'
+              : 'Chat dengan Pembimbing',
+        ),
       ),
       body: SafeArea(
         child: _currentUser!.role == 'pembimbing'
@@ -403,7 +427,10 @@ class _InformasiState extends State<Informasi> {
                             },
                             child: Container(
                               padding: const EdgeInsets.all(12),
-                              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
                                 color: _currentConversationId == conversationId
                                     ? const Color(0xff318c7b).withOpacity(0.2)
@@ -417,10 +444,13 @@ class _InformasiState extends State<Informasi> {
                                     children: [
                                       CircleAvatar(
                                         radius: 20,
-                                        backgroundColor: const Color(0xff318c7b),
+                                        backgroundColor: const Color(
+                                          0xff318c7b,
+                                        ),
                                         child: Text(
                                           calonMualaf?.nama.isNotEmpty == true
-                                              ? calonMualaf!.nama[0].toUpperCase()
+                                              ? calonMualaf!.nama[0]
+                                                    .toUpperCase()
                                               : 'C',
                                           style: const TextStyle(
                                             color: Colors.white,
@@ -481,17 +511,21 @@ class _InformasiState extends State<Informasi> {
             ),
             margin: const EdgeInsets.all(12),
             child: _currentConversationId == null
-                ? const Center(
-                    child: Text('Pilih chat untuk mulai konsultasi'),
-                  )
+                ? const Center(child: Text('Pilih chat untuk mulai konsultasi'))
                 : Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12,
+                          horizontal: 16,
+                        ),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Chat dengan ${_getConversationPartnerName()}',
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       const Divider(height: 1),
@@ -506,7 +540,10 @@ class _InformasiState extends State<Informasi> {
                               )
                             : ListView.builder(
                                 controller: _scrollController,
-                                padding: const EdgeInsets.only(top: 12, bottom: 12),
+                                padding: const EdgeInsets.only(
+                                  top: 12,
+                                  bottom: 12,
+                                ),
                                 itemCount: _messages.length,
                                 itemBuilder: (context, index) {
                                   return _buildChatBubble(_messages[index]);
@@ -583,8 +620,10 @@ class _InformasiState extends State<Informasi> {
                         itemCount: _pembimbingUsers.length,
                         itemBuilder: (context, index) {
                           final pembimbing = _pembimbingUsers[index];
-                          final conversationId = '${pembimbing.id}_${_currentUser!.id}';
-                          final isSelected = _currentConversationId == conversationId;
+                          final conversationId =
+                              '${pembimbing.id}_${_currentUser!.id}';
+                          final isSelected =
+                              _currentConversationId == conversationId;
 
                           return GestureDetector(
                             onTap: () {
@@ -595,7 +634,11 @@ class _InformasiState extends State<Informasi> {
                             },
                             child: Container(
                               width: 180,
-                              margin: EdgeInsets.only(right: index == _pembimbingUsers.length - 1 ? 0 : 12),
+                              margin: EdgeInsets.only(
+                                right: index == _pembimbingUsers.length - 1
+                                    ? 0
+                                    : 12,
+                              ),
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 color: isSelected
@@ -613,7 +656,9 @@ class _InformasiState extends State<Informasi> {
                                     radius: 20,
                                     backgroundColor: Colors.white,
                                     child: Text(
-                                      pembimbing.nama.isNotEmpty ? pembimbing.nama[0].toUpperCase() : 'P',
+                                      pembimbing.nama.isNotEmpty
+                                          ? pembimbing.nama[0].toUpperCase()
+                                          : 'P',
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -662,13 +707,19 @@ class _InformasiState extends State<Informasi> {
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 16,
+                  ),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     _currentConversationId == null
                         ? 'Pilih pembimbing untuk mulai chat'
                         : 'Chat dengan ${_getConversationPartnerName()}',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const Divider(height: 1),
@@ -682,21 +733,21 @@ class _InformasiState extends State<Informasi> {
                           ),
                         )
                       : _messages.isEmpty
-                          ? const Center(
-                              child: Text(
-                                'Mulai konsultasi dengan mengirim pesan.',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.black54),
-                              ),
-                            )
-                          : ListView.builder(
-                              controller: _scrollController,
-                              padding: const EdgeInsets.only(top: 12, bottom: 12),
-                              itemCount: _messages.length,
-                              itemBuilder: (context, index) {
-                                return _buildChatBubble(_messages[index]);
-                              },
-                            ),
+                      ? const Center(
+                          child: Text(
+                            'Mulai konsultasi dengan mengirim pesan.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                        )
+                      : ListView.builder(
+                          controller: _scrollController,
+                          padding: const EdgeInsets.only(top: 12, bottom: 12),
+                          itemCount: _messages.length,
+                          itemBuilder: (context, index) {
+                            return _buildChatBubble(_messages[index]);
+                          },
+                        ),
                 ),
                 if (_currentConversationId != null) _buildMessageInput(),
               ],
@@ -760,7 +811,9 @@ class _InformasiState extends State<Informasi> {
   String _getConversationPartnerName() {
     if (_currentConversationId == null) return 'Unknown';
     final parts = _currentConversationId!.split('_');
-    final partnerId = parts.first == _currentUser!.id ? parts.last : parts.first;
+    final partnerId = parts.first == _currentUser!.id
+        ? parts.last
+        : parts.first;
     final partner = _getUserById(partnerId);
     return partner?.nama ?? 'Unknown User';
   }
