@@ -6,8 +6,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/model_niat.dart';
+
+class SholatSection {
+  final String title;
+  final List<ModelNiat> items;
+
+  SholatSection({required this.title, required this.items});
+}
 
 class NiatSholat extends StatefulWidget {
   const NiatSholat({super.key});
@@ -18,11 +26,87 @@ class NiatSholat extends StatefulWidget {
 }
 
 class _NiatSholatState extends State<NiatSholat> {
-  Future<List<ModelNiat>> readJsonData() async {
-    final jsondata =
-        await rootBundle.rootBundle.loadString('assets/niatshalat.json');
-    final list = json.decode(jsondata) as List<dynamic>;
-    return list.map((e) => ModelNiat.fromJson(e)).toList();
+  static const _prefsKey = 'niat_sholat_checked';
+  late Future<List<SholatSection>> _sectionsFuture;
+  List<List<bool>> _sectionChecked = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _sectionsFuture = _loadSections();
+  }
+
+  Future<List<SholatSection>> _loadSections() async {
+    final sections = await readJsonData();
+    await _loadSectionChecks(sections);
+    return sections;
+  }
+
+  Future<void> _loadSectionChecks(List<SholatSection> sections) async {
+    final prefs = await SharedPreferences.getInstance();
+    _sectionChecked = sections
+        .map((section) => List<bool>.filled(section.items.length, false))
+        .toList();
+
+    final jsonString = prefs.getString(_prefsKey);
+    if (jsonString != null) {
+      final decoded = json.decode(jsonString) as List<dynamic>;
+      for (var i = 0; i < decoded.length && i < sections.length; i++) {
+        final sectionList = decoded[i] as List<dynamic>;
+        for (
+          var j = 0;
+          j < sectionList.length && j < sections[i].items.length;
+          j++
+        ) {
+          if (sectionList[j] is bool) {
+            _sectionChecked[i][j] = sectionList[j] as bool;
+          }
+        }
+      }
+    }
+  }
+
+  Future<void> _saveSectionChecks() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_prefsKey, json.encode(_sectionChecked));
+  }
+
+  void _ensureChecked(List<SholatSection> sections) {
+    var shouldInit = _sectionChecked.length != sections.length;
+    if (!shouldInit) {
+      for (var i = 0; i < sections.length; i++) {
+        if (_sectionChecked[i].length != sections[i].items.length) {
+          shouldInit = true;
+          break;
+        }
+      }
+    }
+    if (shouldInit) {
+      _sectionChecked = sections
+          .map((section) => List<bool>.filled(section.items.length, false))
+          .toList();
+    }
+  }
+
+  Future<List<SholatSection>> readJsonData() async {
+    final niatJson = await rootBundle.rootBundle.loadString(
+      'assets/niatshalat.json',
+    );
+    final bacaanJson = await rootBundle.rootBundle.loadString(
+      'assets/bacaanshalat.json',
+    );
+
+    final niatList = (json.decode(niatJson) as List<dynamic>)
+        .map((e) => ModelNiat.fromJson(e))
+        .toList();
+    final bacaanList = (json.decode(bacaanJson) as List<dynamic>)
+        .map((e) => ModelNiat.fromJson(e))
+        .toList();
+
+    return [
+      SholatSection(title: 'Niat Sholat', items: niatList),
+      SholatSection(title: 'Bacaan Sholat', items: bacaanList),
+    ];
   }
 
   @override
@@ -47,8 +131,9 @@ class _NiatSholatState extends State<NiatSholat> {
                   child: Container(
                     margin: EdgeInsets.only(top: 80),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Color.fromARGB(255, 95, 207, 235)),
+                      borderRadius: BorderRadius.circular(30),
+                      color: Color.fromARGB(255, 95, 207, 235),
+                    ),
                     height: 200,
                     width: MediaQuery.of(context).size.width,
                     child: Container(
@@ -58,18 +143,20 @@ class _NiatSholatState extends State<NiatSholat> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Niat Sholat Wajib",
+                            "Niat dan Bacaan Sholat",
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           Text(
-                            "Bacaan niat sholat wajib 5 waktu",
+                            "Kumpulan niat dan bacaan sholat dalam satu halaman",
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
@@ -97,114 +184,131 @@ class _NiatSholatState extends State<NiatSholat> {
             Expanded(
               child: Container(
                 child: FutureBuilder(
-                  future: readJsonData(),
+                  future: _sectionsFuture,
                   builder: (context, data) {
                     if (data.hasError) {
                       return Center(child: Text("${data.error}"));
                     } else if (data.hasData) {
-                      var items = data.data as List<ModelNiat>;
-                      return ListView.builder(
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                      var sections = data.data as List<SholatSection>;
+                      _ensureChecked(sections);
+                      final childrenWidgets = <Widget>[];
+
+                      for (
+                        var sectionIndex = 0;
+                        sectionIndex < sections.length;
+                        sectionIndex++
+                      ) {
+                        final section = sections[sectionIndex];
+                        childrenWidgets.add(
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical: 10,
                             ),
-                            elevation: 5,
-                            margin: EdgeInsets.all(15),
-                            child: Theme(
-                              data: Theme.of(context)
-                                  .copyWith(dividerColor: Colors.transparent),
-                              child: ExpansionTile(
-                                title: Text(
-                                  items[index].name.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                            child: Text(
+                              section.title,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
+
+                        for (
+                          var itemIndex = 0;
+                          itemIndex < section.items.length;
+                          itemIndex++
+                        ) {
+                          final item = section.items[itemIndex];
+                          childrenWidgets.add(
+                            Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 5,
+                              margin: EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 8,
+                              ),
+                              child: Theme(
+                                data: Theme.of(
+                                  context,
+                                ).copyWith(dividerColor: Colors.transparent),
+                                child: ExpansionTile(
+                                  leading: Checkbox(
+                                    value:
+                                        _sectionChecked[sectionIndex][itemIndex],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _sectionChecked[sectionIndex][itemIndex] =
+                                            value ?? false;
+                                      });
+                                      _saveSectionChecks();
+                                    },
                                   ),
-                                ),
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(8),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            padding: EdgeInsets.only(bottom: 8),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 8,
-                                                    right: 8,
-                                                  ),
-                                                  child: Text(
-                                                    items[index]
-                                                        .arabic
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 8,
-                                                    right: 8,
-                                                  ),
-                                                  child: Text(
-                                                    items[index]
-                                                        .latin
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                    left: 8,
-                                                    right: 8,
-                                                    top: 5,
-                                                  ),
-                                                  child: Text(
-                                                    items[index]
-                                                        .terjemahan
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                  title: Text(
+                                    item.name.toString(),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                ],
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                            ),
+                                            child: Text(
+                                              item.arabic.toString(),
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 6,
+                                            ),
+                                            child: Text(
+                                              item.latin.toString(),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                            ),
+                                            child: Text(
+                                              item.terjemahan.toString(),
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           );
-                        },
-                      );
+                        }
+                      }
+
+                      return ListView(children: childrenWidgets);
                     } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return Center(child: CircularProgressIndicator());
                     }
                   },
                 ),

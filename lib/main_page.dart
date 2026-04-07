@@ -3,7 +3,6 @@ import 'package:bina_mualaf/page/murotal.dart';
 import 'package:bina_mualaf/page/rukun_iman_islam_page.dart';
 import 'package:flutter/material.dart';
 import 'ayat_kursi_page.dart';
-import 'bacaan_sholat_page.dart';
 import 'information.dart';
 import 'niat_sholat_page.dart';
 
@@ -25,7 +24,7 @@ class MainPage extends StatelessWidget {
                 children: [
                   buildMenu(
                     imageAsset: "assets/icniat.png",
-                    title: "Niat Sholat",
+                    title: "Niat Sholat dan Bacaan Sholat",
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -34,20 +33,6 @@ class MainPage extends StatelessWidget {
                       );
                     },
                   ),
-                  // ignore: prefer_const_constructors
-                  SizedBox(height: 40),
-                  buildMenu(
-                    imageAsset: "assets/icdoa.png",
-                    title: "Bacaan Sholat",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        // ignore: prefer_const_constructors
-                        MaterialPageRoute(builder: (context) => BacaanSholat()),
-                      );
-                    },
-                  ),
-                  // ignore: prefer_const_constructors
                 ],
               ),
               Row(
@@ -75,7 +60,7 @@ class MainPage extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => Informasi()),
                       );
                     },
-                  )
+                  ),
                 ],
               ),
               Row(
@@ -89,7 +74,8 @@ class MainPage extends StatelessWidget {
                         context,
                         // ignore: prefer_const_constructors
                         MaterialPageRoute(
-                            builder: (context) => RukunImanIslam()),
+                          builder: (context) => RukunImanIslam(),
+                        ),
                       );
                     },
                   ),
@@ -100,7 +86,8 @@ class MainPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DoaKeseharian()),
+                          builder: (context) => DoaKeseharian(),
+                        ),
                       );
                     },
                   ),
@@ -120,7 +107,7 @@ class MainPage extends StatelessWidget {
                     },
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -143,11 +130,7 @@ class MainPage extends StatelessWidget {
           onTap: onPressed,
           child: Column(
             children: [
-              Image(
-                image: AssetImage(imageAsset),
-                height: 100,
-                width: 100,
-              ),
+              Image(image: AssetImage(imageAsset), height: 100, width: 100),
               // ignore: prefer_const_constructors
               SizedBox(height: 10),
               Text(

@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:bina_mualaf/model/model_bacaan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RukunImanIslam extends StatefulWidget {
   const RukunImanIslam({super.key});
@@ -15,9 +16,45 @@ class RukunImanIslam extends StatefulWidget {
 }
 
 class _RukunImanIslamState extends State<RukunImanIslam> {
+  static const _prefsKey = 'rukun_iman_islam_checked';
+  late Future<List<ModelBacaan>> _itemsFuture;
+  List<bool> _checked = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _itemsFuture = _loadItems();
+  }
+
+  Future<List<ModelBacaan>> _loadItems() async {
+    final items = await readJsonData();
+    await _loadChecked(items.length);
+    return items;
+  }
+
+  Future<void> _loadChecked(int count) async {
+    final prefs = await SharedPreferences.getInstance();
+    _checked = List<bool>.filled(count, false);
+    final jsonString = prefs.getString(_prefsKey);
+    if (jsonString != null) {
+      final list = json.decode(jsonString) as List<dynamic>;
+      for (var i = 0; i < list.length && i < count; i++) {
+        if (list[i] is bool) {
+          _checked[i] = list[i] as bool;
+        }
+      }
+    }
+  }
+
+  Future<void> _saveChecked() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_prefsKey, json.encode(_checked));
+  }
+
   Future<List<ModelBacaan>> readJsonData() async {
-    final jsondata =
-        await rootBundle.rootBundle.loadString('assets/rukunimanislam.json');
+    final jsondata = await rootBundle.rootBundle.loadString(
+      'assets/rukunimanislam.json',
+    );
     final list = json.decode(jsondata) as List<dynamic>;
     return list.map((e) => ModelBacaan.fromJson(e)).toList();
   }
@@ -44,8 +81,9 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                   child: Container(
                     margin: const EdgeInsets.only(top: 80),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: const Color.fromARGB(255, 235, 225, 93)),
+                      borderRadius: BorderRadius.circular(30),
+                      color: const Color.fromARGB(255, 235, 225, 93),
+                    ),
                     height: 200,
                     width: MediaQuery.of(context).size.width,
                     child: Container(
@@ -98,7 +136,7 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
             Expanded(
               child: Container(
                 child: FutureBuilder(
-                  future: readJsonData(),
+                  future: _itemsFuture,
                   builder: (context, AsyncSnapshot<List<ModelBacaan>> data) {
                     if (data.hasError) {
                       return Center(child: Text("${data.error}"));
@@ -114,10 +152,19 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                             elevation: 5,
                             margin: EdgeInsets.all(15),
                             child: Theme(
-                              data: Theme.of(context).copyWith(
-                                dividerColor: Colors.transparent,
-                              ),
+                              data: Theme.of(
+                                context,
+                              ).copyWith(dividerColor: Colors.transparent),
                               child: ExpansionTile(
+                                leading: Checkbox(
+                                  value: _checked[index],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _checked[index] = value ?? false;
+                                    });
+                                    _saveChecked();
+                                  },
+                                ),
                                 title: Text(
                                   items[index].name.toString(),
                                   style: TextStyle(
@@ -149,8 +196,7 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                                                     right: 8,
                                                   ),
                                                   child: Text(
-                                                    items[index]
-                                                        .latin
+                                                    items[index].latin
                                                         .toString(),
                                                     style: TextStyle(
                                                       fontSize: 14,
@@ -166,18 +212,17 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                                                     top: 5,
                                                   ),
                                                   child: Text(
-                                                    items[index]
-                                                        .terjemahan
+                                                    items[index].terjemahan
                                                         .toString(),
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                     ),
                                                   ),
-                                                )
+                                                ),
                                               ],
                                             ),
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -188,9 +233,7 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                         },
                       );
                     } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
+                      return Center(child: CircularProgressIndicator());
                     }
                   },
                 ),

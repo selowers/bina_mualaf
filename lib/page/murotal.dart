@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:bina_mualaf/model/model_murotal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class Murotal extends StatefulWidget {
@@ -17,29 +18,16 @@ class Murotal extends StatefulWidget {
 }
 
 class _MurotalState extends State<Murotal> {
+  static const _prefsKey = 'murotal_checked';
   late AudioPlayer player = AudioPlayer();
   PlayerState? _playerState;
-  Duration? _position;
-  Duration? _duration;
-  bool get _isPlaying => _playerState == PlayerState.playing;
-  bool get _isPaused => _playerState == PlayerState.paused;
-
-  StreamSubscription? _durationSubscription;
-  StreamSubscription? _positionSubscription;
-  StreamSubscription? _playerCompleteSubscription;
-  StreamSubscription? _playerStateChangeSubscription;
-
-  Future<List<ModelBacaanSuara>> readJsonData() async {
-    final jsondata = await rootBundle.rootBundle.loadString(
-      'assets/murotal.json',
-    );
-    final list = json.decode(jsondata) as List<dynamic>;
-    return list.map((e) => ModelBacaanSuara.fromJson(e)).toList();
-  }
+  List<bool> _checked = [];
+  late Future<List<ModelBacaanSuara>> _itemsFuture;
 
   @override
   void initState() {
     super.initState();
+    _itemsFuture = _loadItems();
 
     // Create the audio player.
     player = AudioPlayer();
@@ -58,6 +46,49 @@ class _MurotalState extends State<Murotal> {
       }),
     );
     _initStreams();
+  }
+
+  Future<List<ModelBacaanSuara>> _loadItems() async {
+    final items = await readJsonData();
+    await _loadChecked(items.length);
+    return items;
+  }
+
+  Future<void> _loadChecked(int count) async {
+    final prefs = await SharedPreferences.getInstance();
+    _checked = List<bool>.filled(count, false);
+    final jsonString = prefs.getString(_prefsKey);
+    if (jsonString != null) {
+      final list = json.decode(jsonString) as List<dynamic>;
+      for (var i = 0; i < list.length && i < count; i++) {
+        if (list[i] is bool) {
+          _checked[i] = list[i] as bool;
+        }
+      }
+    }
+  }
+
+  Future<void> _saveChecked() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_prefsKey, json.encode(_checked));
+  }
+
+  Duration? _position;
+  Duration? _duration;
+  bool get _isPlaying => _playerState == PlayerState.playing;
+  bool get _isPaused => _playerState == PlayerState.paused;
+
+  StreamSubscription? _durationSubscription;
+  StreamSubscription? _positionSubscription;
+  StreamSubscription? _playerCompleteSubscription;
+  StreamSubscription? _playerStateChangeSubscription;
+
+  Future<List<ModelBacaanSuara>> readJsonData() async {
+    final jsondata = await rootBundle.rootBundle.loadString(
+      'assets/murotal.json',
+    );
+    final list = json.decode(jsondata) as List<dynamic>;
+    return list.map((e) => ModelBacaanSuara.fromJson(e)).toList();
   }
 
   @override
@@ -137,7 +168,7 @@ class _MurotalState extends State<Murotal> {
             Expanded(
               child: Container(
                 child: FutureBuilder(
-                  future: readJsonData(),
+                  future: _itemsFuture,
                   builder:
                       (context, AsyncSnapshot<List<ModelBacaanSuara>> data) {
                         if (data.hasError) {
@@ -163,6 +194,15 @@ class _MurotalState extends State<Murotal> {
                                     context,
                                   ).copyWith(dividerColor: Colors.transparent),
                                   child: ExpansionTile(
+                                    leading: Checkbox(
+                                      value: _checked[index],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _checked[index] = value ?? false;
+                                        });
+                                        _saveChecked();
+                                      },
+                                    ),
                                     title: Text(
                                       items[index].name.toString(),
                                       style: TextStyle(
