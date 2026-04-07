@@ -18,7 +18,9 @@ class SholatSection {
 }
 
 class NiatSholat extends StatefulWidget {
-  const NiatSholat({super.key});
+  final String userId;
+
+  const NiatSholat({super.key, String? userId}) : userId = userId ?? 'guest';
 
   @override
   // ignore: library_private_types_in_public_api
@@ -26,13 +28,14 @@ class NiatSholat extends StatefulWidget {
 }
 
 class _NiatSholatState extends State<NiatSholat> {
-  static const _prefsKey = 'niat_sholat_checked';
+  late String _prefsKey;
   late Future<List<SholatSection>> _sectionsFuture;
   List<List<bool>> _sectionChecked = [];
 
   @override
   void initState() {
     super.initState();
+    _prefsKey = 'niat_sholat_checked_${widget.userId}';
     _sectionsFuture = _loadSections();
   }
 

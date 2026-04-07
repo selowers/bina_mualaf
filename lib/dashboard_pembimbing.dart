@@ -1,18 +1,63 @@
-import 'package:bina_mualaf/page/doa_keseharian_page.dart';
-import 'package:bina_mualaf/page/murotal.dart';
-import 'package:bina_mualaf/page/rukun_iman_islam_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'model/user.dart';
+import 'niat_sholat_page.dart';
+import 'page/rukun_iman_islam_page.dart';
+import 'page/doa_keseharian_page.dart';
+import 'page/murotal.dart';
 import 'ayat_kursi_page.dart';
 import 'information.dart';
-import 'niat_sholat_page.dart';
 
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+class DashboardPembimbing extends StatefulWidget {
+  const DashboardPembimbing({super.key});
+
+  @override
+  _DashboardPembimbingState createState() => _DashboardPembimbingState();
+}
+
+class _DashboardPembimbingState extends State<DashboardPembimbing> {
+  User? _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+  }
+
+  Future<void> _loadCurrentUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userJson = prefs.getString('current_user');
+    if (userJson != null) {
+      setState(() {
+        _currentUser = User.fromJson(json.decode(userJson));
+      });
+    }
+  }
+
+  Future<void> _logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('current_user');
+    Navigator.pushReplacementNamed(context, '/login');
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_currentUser == null) {
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 115, 217, 243),
+      appBar: AppBar(
+        title: Text('Dashboard Pembimbing - ${_currentUser!.nama}'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: _logout,
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -28,8 +73,7 @@ class MainPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        // ignore: prefer_const_constructors
-                        MaterialPageRoute(builder: (context) => NiatSholat()),
+                        MaterialPageRoute(builder: (context) => NiatSholat(userId: _currentUser!.id)),
                       );
                     },
                   ),
@@ -38,15 +82,12 @@ class MainPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // ignore: prefer_const_constructors
-                  SizedBox(height: 40),
                   buildMenu(
                     imageAsset: "assets/icbacaan.png",
                     title: "Ayat Kursi",
                     onPressed: () {
                       Navigator.push(
                         context,
-                        // ignore: prefer_const_constructors
                         MaterialPageRoute(builder: (context) => AyatKursi()),
                       );
                     },
@@ -72,10 +113,7 @@ class MainPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        // ignore: prefer_const_constructors
-                        MaterialPageRoute(
-                          builder: (context) => RukunImanIslam(),
-                        ),
+                        MaterialPageRoute(builder: (context) => RukunImanIslam(userId: _currentUser!.id)),
                       );
                     },
                   ),
@@ -85,9 +123,7 @@ class MainPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => DoaKeseharian(),
-                        ),
+                        MaterialPageRoute(builder: (context) => DoaKeseharian(userId: _currentUser!.id)),
                       );
                     },
                   ),
@@ -102,7 +138,7 @@ class MainPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Murotal()),
+                        MaterialPageRoute(builder: (context) => Murotal(userId: _currentUser!.id)),
                       );
                     },
                   ),
@@ -129,12 +165,14 @@ class MainPage extends StatelessWidget {
           onTap: onPressed,
           child: Column(
             children: [
-              Image(image: AssetImage(imageAsset), height: 100, width: 100),
-              // ignore: prefer_const_constructors
+              Image(
+                image: AssetImage(imageAsset),
+                height: 100,
+                width: 100,
+              ),
               SizedBox(height: 10),
               Text(
                 title,
-                // ignore: prefer_const_constructors
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
             ],
@@ -143,6 +181,4 @@ class MainPage extends StatelessWidget {
       ),
     );
   }
-
-  void information() {}
 }

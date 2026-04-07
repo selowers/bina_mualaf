@@ -8,7 +8,9 @@ import 'package:flutter/services.dart' as rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RukunImanIslam extends StatefulWidget {
-  const RukunImanIslam({super.key});
+  final String userId;
+
+  const RukunImanIslam({super.key, String? userId}) : userId = userId ?? 'guest';
 
   @override
   // ignore: library_private_types_in_public_api
@@ -16,13 +18,14 @@ class RukunImanIslam extends StatefulWidget {
 }
 
 class _RukunImanIslamState extends State<RukunImanIslam> {
-  static const _prefsKey = 'rukun_iman_islam_checked';
+  late String _prefsKey;
   late Future<List<ModelBacaan>> _itemsFuture;
   List<bool> _checked = [];
 
   @override
   void initState() {
     super.initState();
+    _prefsKey = 'rukun_iman_islam_checked_${widget.userId}';
     _itemsFuture = _loadItems();
   }
 

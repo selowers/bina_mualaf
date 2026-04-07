@@ -8,7 +8,9 @@ import 'package:flutter/services.dart' as rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DoaKeseharian extends StatefulWidget {
-  const DoaKeseharian({super.key});
+  final String userId;
+
+  const DoaKeseharian({super.key, String? userId}) : userId = userId ?? 'guest';
 
   @override
   // ignore: library_private_types_in_public_api
@@ -16,13 +18,14 @@ class DoaKeseharian extends StatefulWidget {
 }
 
 class _DoaKeseharianState extends State<DoaKeseharian> {
-  static const _prefsKey = 'doa_keseharian_checked';
+  late String _prefsKey;
   late Future<List<ModelBacaan>> _itemsFuture;
   List<bool> _checked = [];
 
   @override
   void initState() {
     super.initState();
+    _prefsKey = 'doa_keseharian_checked_${widget.userId}';
     _itemsFuture = _loadItems();
   }
 

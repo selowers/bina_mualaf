@@ -10,7 +10,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class Murotal extends StatefulWidget {
-  const Murotal({Key? key}) : super(key: key);
+  final String userId;
+
+  const Murotal({Key? key, String? userId})
+      : userId = userId ?? 'guest',
+        super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -18,7 +22,7 @@ class Murotal extends StatefulWidget {
 }
 
 class _MurotalState extends State<Murotal> {
-  static const _prefsKey = 'murotal_checked';
+  late String _prefsKey;
   late AudioPlayer player = AudioPlayer();
   PlayerState? _playerState;
   List<bool> _checked = [];
@@ -27,6 +31,7 @@ class _MurotalState extends State<Murotal> {
   @override
   void initState() {
     super.initState();
+    _prefsKey = 'murotal_checked_${widget.userId}';
     _itemsFuture = _loadItems();
 
     // Create the audio player.
