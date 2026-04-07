@@ -51,12 +51,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
       backgroundColor: const Color.fromARGB(255, 115, 217, 243),
       appBar: AppBar(
         title: Text('Dashboard Calon Mualaf - ${_currentUser!.nama}'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: _logout,
-          ),
-        ],
+        actions: [IconButton(icon: Icon(Icons.logout), onPressed: _logout)],
       ),
       body: SafeArea(
         child: Center(
@@ -73,7 +68,10 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => NiatSholat(userId: _currentUser!.id)),
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NiatSholat(userId: _currentUser!.id),
+                        ),
                       );
                     },
                   ),
@@ -113,7 +111,10 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RukunImanIslam(userId: _currentUser!.id)),
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              RukunImanIslam(userId: _currentUser!.id),
+                        ),
                       );
                     },
                   ),
@@ -123,7 +124,10 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DoaKeseharian(userId: _currentUser!.id)),
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DoaKeseharian(userId: _currentUser!.id),
+                        ),
                       );
                     },
                   ),
@@ -138,7 +142,10 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Murotal(userId: _currentUser!.id)),
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              Murotal(userId: _currentUser!.id),
+                        ),
                       );
                     },
                   ),
@@ -165,11 +172,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
           onTap: onPressed,
           child: Column(
             children: [
-              Image(
-                image: AssetImage(imageAsset),
-                height: 100,
-                width: 100,
-              ),
+              Image(image: AssetImage(imageAsset), height: 100, width: 100),
               SizedBox(height: 10),
               Text(
                 title,

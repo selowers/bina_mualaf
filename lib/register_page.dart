@@ -40,7 +40,10 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     users.add(newUser);
-    await prefs.setString('users', json.encode(users.map((u) => u.toJson()).toList()));
+    await prefs.setString(
+      'users',
+      json.encode(users.map((u) => u.toJson()).toList()),
+    );
 
     Navigator.pop(context);
   }
@@ -57,7 +60,11 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               Text(
                 'Register',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               SizedBox(height: 20),
               TextField(
@@ -91,8 +98,14 @@ class _RegisterPageState extends State<RegisterPage> {
               DropdownButton<String>(
                 value: _selectedRole,
                 items: [
-                  DropdownMenuItem(value: 'calon_mualaf', child: Text('Calon Mualaf')),
-                  DropdownMenuItem(value: 'pembimbing', child: Text('Pembimbing')),
+                  DropdownMenuItem(
+                    value: 'calon_mualaf',
+                    child: Text('Calon Mualaf'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'pembimbing',
+                    child: Text('Pembimbing'),
+                  ),
                 ],
                 onChanged: (value) {
                   setState(() {
@@ -104,10 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
               if (_errorMessage.isNotEmpty)
                 Text(_errorMessage, style: TextStyle(color: Colors.red)),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _register,
-                child: Text('Register'),
-              ),
+              ElevatedButton(onPressed: _register, child: Text('Register')),
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: Text('Kembali ke Login'),

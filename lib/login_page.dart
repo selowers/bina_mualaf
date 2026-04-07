@@ -27,7 +27,9 @@ class _LoginPageState extends State<LoginPage> {
         .toList();
 
     final user = users.firstWhere(
-      (u) => u.email == _emailController.text && u.password == _passwordController.text,
+      (u) =>
+          u.email == _emailController.text &&
+          u.password == _passwordController.text,
       orElse: () => User(id: '-1', nama: '', email: '', password: '', role: ''),
     );
 
@@ -63,7 +65,11 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Text(
                 'Login',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               SizedBox(height: 20),
               TextField(
@@ -88,10 +94,7 @@ class _LoginPageState extends State<LoginPage> {
               if (_errorMessage.isNotEmpty)
                 Text(_errorMessage, style: TextStyle(color: Colors.red)),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _login,
-                child: Text('Login'),
-              ),
+              ElevatedButton(onPressed: _login, child: Text('Login')),
               TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -105,7 +108,9 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                    MaterialPageRoute(
+                      builder: (context) => ForgotPasswordPage(),
+                    ),
                   );
                 },
                 child: Text('Lupa Password'),

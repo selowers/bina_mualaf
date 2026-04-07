@@ -13,8 +13,8 @@ class Murotal extends StatefulWidget {
   final String userId;
 
   const Murotal({Key? key, String? userId})
-      : userId = userId ?? 'guest',
-        super(key: key);
+    : userId = userId ?? 'guest',
+      super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api

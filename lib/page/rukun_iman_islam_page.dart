@@ -10,7 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RukunImanIslam extends StatefulWidget {
   final String userId;
 
-  const RukunImanIslam({super.key, String? userId}) : userId = userId ?? 'guest';
+  const RukunImanIslam({super.key, String? userId})
+    : userId = userId ?? 'guest';
 
   @override
   // ignore: library_private_types_in_public_api

@@ -30,7 +30,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         password: '123456', // Reset to default
         role: users[userIndex].role,
       );
-      await prefs.setString('users', json.encode(users.map((u) => u.toJson()).toList()));
+      await prefs.setString(
+        'users',
+        json.encode(users.map((u) => u.toJson()).toList()),
+      );
       setState(() {
         _message = 'Password telah direset ke 123456';
       });
@@ -53,7 +56,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             children: [
               Text(
                 'Lupa Password',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               SizedBox(height: 20),
               TextField(
