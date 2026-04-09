@@ -98,7 +98,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _namaController,
                       decoration: InputDecoration(
                         labelText: 'Nama Lengkap',
-                        prefixIcon: Icon(Icons.person, color: Colors.green.shade600),
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: Colors.green.shade600,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -111,7 +114,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: _emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        prefixIcon: Icon(Icons.email, color: Colors.green.shade600),
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Colors.green.shade600,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -125,7 +131,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscureText: true,
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock, color: Colors.green.shade600),
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Colors.green.shade600,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -180,7 +189,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: _register,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green.shade600,
-                        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 50,
+                          vertical: 15,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),

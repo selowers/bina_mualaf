@@ -103,7 +103,10 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        prefixIcon: Icon(Icons.email, color: Colors.green.shade600),
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Colors.green.shade600,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -117,7 +120,10 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: true,
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock, color: Colors.green.shade600),
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Colors.green.shade600,
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -143,7 +149,10 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: _login,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green.shade600,
-                        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 50,
+                          vertical: 15,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -161,7 +170,9 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => RegisterPage()),
+                              MaterialPageRoute(
+                                builder: (context) => RegisterPage(),
+                              ),
                             );
                           },
                           child: Text(
