@@ -111,7 +111,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                   children: [
                     buildMenu(
                       imageAsset: "assets/icniat.png",
-                      title: "Niat Sholat & Bacaan",
+                      title: "Niat & Bacaan Sholat",
                       onPressed: () {
                         Navigator.push(
                           context,
