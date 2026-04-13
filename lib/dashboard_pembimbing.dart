@@ -63,21 +63,16 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
             tooltip: 'Akun',
             icon: _buildAvatarIcon(),
             itemBuilder: (context) => [
-              PopupMenuItem<String>(
-                value: 'edit',
-                child: Text('Edit Profil'),
-              ),
-              PopupMenuItem<String>(
-                value: 'logout',
-                child: Text('Logout'),
-              ),
+              PopupMenuItem<String>(value: 'edit', child: Text('Edit Profil')),
+              PopupMenuItem<String>(value: 'logout', child: Text('Logout')),
             ],
             onSelected: (value) {
               if (value == 'edit') {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EditProfilePage(currentUser: _currentUser!),
+                    builder: (context) =>
+                        EditProfilePage(currentUser: _currentUser!),
                   ),
                 ).then((_) {
                   _loadCurrentUser();
@@ -105,7 +100,8 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
               children: [
                 _buildHeader(
                   title: 'Hai Pembimbing, ${_currentUser!.nama}',
-                  subtitle: 'Bimbing calon mualaf dengan inspirasi dan materi yang mudah dipahami.',
+                  subtitle:
+                      'Bimbing calon mualaf dengan inspirasi dan materi yang mudah dipahami.',
                   icon: Icons.school,
                 ),
                 SizedBox(height: 24),
@@ -179,7 +175,8 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Murotal(userId: _currentUser!.id),
+                            builder: (context) =>
+                                Murotal(userId: _currentUser!.id),
                           ),
                         );
                       },
@@ -256,13 +253,19 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
   }
 
   Widget _buildAvatarIcon() {
-    final hasValidAvatar = _currentUser!.avatarPath.isNotEmpty && File(_currentUser!.avatarPath).existsSync();
+    final hasValidAvatar =
+        _currentUser!.avatarPath.isNotEmpty &&
+        File(_currentUser!.avatarPath).existsSync();
     return CircleAvatar(
       key: _avatarKey, // Force refresh avatar
       radius: 18,
       backgroundColor: Colors.white,
-      backgroundImage: hasValidAvatar ? FileImage(File(_currentUser!.avatarPath)) as ImageProvider : null,
-      child: !hasValidAvatar ? Icon(Icons.person, color: Color(0xFF4A8CF7)) : null,
+      backgroundImage: hasValidAvatar
+          ? FileImage(File(_currentUser!.avatarPath)) as ImageProvider
+          : null,
+      child: !hasValidAvatar
+          ? Icon(Icons.person, color: Color(0xFF4A8CF7))
+          : null,
     );
   }
 
@@ -312,10 +315,7 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                 Text(
                   'Sentuh untuk mulai',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
                 ),
               ],
             ),

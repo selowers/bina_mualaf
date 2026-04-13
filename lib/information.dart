@@ -575,131 +575,139 @@ class _InformasiState extends State<Informasi> {
               ),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
-              const BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.15),
-                blurRadius: 12,
-                offset: Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Konsultasi Pembimbing',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                const BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.15),
+                  blurRadius: 12,
+                  offset: Offset(0, 6),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Halo, ${_currentUser!.nama}. Pilih pembimbing untuk konsultasi.',
-                style: const TextStyle(fontSize: 15, color: Colors.white70),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Daftar Pembimbing Tersedia',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Konsultasi Pembimbing',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                height: 120,
-                child: _pembimbingUsers.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'Belum ada pembimbing terdaftar.',
-                          style: TextStyle(color: Colors.white70),
-                        ),
-                      )
-                    : ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _pembimbingUsers.length,
-                        itemBuilder: (context, index) {
-                          final pembimbing = _pembimbingUsers[index];
-                          final conversationId =
-                              '${pembimbing.id}_${_currentUser!.id}';
-                          final isSelected =
-                              _currentConversationId == conversationId;
+                const SizedBox(height: 10),
+                Text(
+                  'Halo, ${_currentUser!.nama}. Pilih pembimbing untuk konsultasi.',
+                  style: const TextStyle(fontSize: 15, color: Colors.white70),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Daftar Pembimbing Tersedia',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 120,
+                  child: _pembimbingUsers.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Belum ada pembimbing terdaftar.',
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                        )
+                      : ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _pembimbingUsers.length,
+                          itemBuilder: (context, index) {
+                            final pembimbing = _pembimbingUsers[index];
+                            final conversationId =
+                                '${pembimbing.id}_${_currentUser!.id}';
+                            final isSelected =
+                                _currentConversationId == conversationId;
 
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _currentConversationId = conversationId;
-                              });
-                              _updateMessagesForCurrentConversation();
-                            },
-                            child: Container(
-                              width: 180,
-                              margin: EdgeInsets.only(
-                                right: index == _pembimbingUsers.length - 1
-                                    ? 0
-                                    : 12,
-                              ),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? const Color.fromRGBO(255, 255, 255, 0.3)
-                                    : const Color.fromRGBO(255, 255, 255, 0.15),
-                                borderRadius: BorderRadius.circular(20),
-                                border: isSelected
-                                    ? Border.all(color: Colors.white, width: 2)
-                                    : null,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 20,
-                                    backgroundColor: Colors.white,
-                                    child: Text(
-                                      pembimbing.nama.isNotEmpty
-                                          ? pembimbing.nama[0].toUpperCase()
-                                          : 'P',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff318c7b),
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _currentConversationId = conversationId;
+                                });
+                                _updateMessagesForCurrentConversation();
+                              },
+                              child: Container(
+                                width: 180,
+                                margin: EdgeInsets.only(
+                                  right: index == _pembimbingUsers.length - 1
+                                      ? 0
+                                      : 12,
+                                ),
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? const Color.fromRGBO(255, 255, 255, 0.3)
+                                      : const Color.fromRGBO(
+                                          255,
+                                          255,
+                                          255,
+                                          0.15,
+                                        ),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: isSelected
+                                      ? Border.all(
+                                          color: Colors.white,
+                                          width: 2,
+                                        )
+                                      : null,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: Colors.white,
+                                      child: Text(
+                                        pembimbing.nama.isNotEmpty
+                                            ? pembimbing.nama[0].toUpperCase()
+                                            : 'P',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff318c7b),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    pembimbing.nama,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      pembimbing.nama,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    pembimbing.email,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                      color: Colors.white70,
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      pembimbing.email,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.white70,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-              ),
-            ],
+                            );
+                          },
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
         Expanded(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 12),
@@ -807,7 +815,14 @@ class _InformasiState extends State<Informasi> {
   User? _getUserById(String userId) {
     return _allUsers.firstWhere(
       (user) => user.id == userId,
-      orElse: () => User(id: '', nama: '', email: '', password: '', role: '', avatarPath: ''),
+      orElse: () => User(
+        id: '',
+        nama: '',
+        email: '',
+        password: '',
+        role: '',
+        avatarPath: '',
+      ),
     );
   }
 

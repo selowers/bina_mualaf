@@ -63,21 +63,16 @@ class _DashboardMualafState extends State<DashboardMualaf> {
             tooltip: 'Akun',
             icon: _buildAvatarIcon(),
             itemBuilder: (context) => [
-              PopupMenuItem<String>(
-                value: 'edit',
-                child: Text('Edit Profil'),
-              ),
-              PopupMenuItem<String>(
-                value: 'logout',
-                child: Text('Logout'),
-              ),
+              PopupMenuItem<String>(value: 'edit', child: Text('Edit Profil')),
+              PopupMenuItem<String>(value: 'logout', child: Text('Logout')),
             ],
             onSelected: (value) {
               if (value == 'edit') {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EditProfilePage(currentUser: _currentUser!),
+                    builder: (context) =>
+                        EditProfilePage(currentUser: _currentUser!),
                   ),
                 ).then((_) {
                   _loadCurrentUser();
@@ -105,7 +100,8 @@ class _DashboardMualafState extends State<DashboardMualaf> {
               children: [
                 _buildHeader(
                   title: 'Selamat Datang, ${_currentUser!.nama}',
-                  subtitle: 'Jelajahi materi dan pelajari setiap langkah dengan penuh semangat!',
+                  subtitle:
+                      'Jelajahi materi dan pelajari setiap langkah dengan penuh semangat!',
                   icon: Icons.star,
                 ),
                 SizedBox(height: 24),
@@ -179,7 +175,8 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Murotal(userId: _currentUser!.id),
+                            builder: (context) =>
+                                Murotal(userId: _currentUser!.id),
                           ),
                         );
                       },
@@ -256,13 +253,19 @@ class _DashboardMualafState extends State<DashboardMualaf> {
   }
 
   Widget _buildAvatarIcon() {
-    final hasValidAvatar = _currentUser!.avatarPath.isNotEmpty && File(_currentUser!.avatarPath).existsSync();
+    final hasValidAvatar =
+        _currentUser!.avatarPath.isNotEmpty &&
+        File(_currentUser!.avatarPath).existsSync();
     return CircleAvatar(
       key: _avatarKey, // Force refresh dengan key baru
       radius: 18,
       backgroundColor: Colors.white,
-      backgroundImage: hasValidAvatar ? FileImage(File(_currentUser!.avatarPath)) as ImageProvider : null,
-      child: !hasValidAvatar ? Icon(Icons.person, color: Color(0xFF4A8CF7)) : null,
+      backgroundImage: hasValidAvatar
+          ? FileImage(File(_currentUser!.avatarPath)) as ImageProvider
+          : null,
+      child: !hasValidAvatar
+          ? Icon(Icons.person, color: Color(0xFF4A8CF7))
+          : null,
     );
   }
 
@@ -312,10 +315,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                 Text(
                   'Sentuh untuk mulai',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
                 ),
               ],
             ),

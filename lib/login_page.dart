@@ -31,7 +31,14 @@ class _LoginPageState extends State<LoginPage> {
       (u) =>
           u.email == _emailController.text &&
           u.password == _passwordController.text,
-      orElse: () => User(id: '-1', nama: '', email: '', password: '', role: '', avatarPath: ''),
+      orElse: () => User(
+        id: '-1',
+        nama: '',
+        email: '',
+        password: '',
+        role: '',
+        avatarPath: '',
+      ),
     );
 
     if (user.id != '-1') {
