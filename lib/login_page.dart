@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'model/user.dart';
 import 'register_page.dart';
 import 'forgot_password_page.dart';
+import 'change_password_page.dart';
 import 'dashboard_pembimbing.dart';
 import 'dashboard_mualaf.dart';
 
@@ -30,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       (u) =>
           u.email == _emailController.text &&
           u.password == _passwordController.text,
-      orElse: () => User(id: '-1', nama: '', email: '', password: '', role: ''),
+      orElse: () => User(id: '-1', nama: '', email: '', password: '', role: '', avatarPath: ''),
     );
 
     if (user.id != '-1') {
@@ -196,6 +197,20 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ],
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChangePasswordPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Ganti Password',
+                        style: TextStyle(color: Colors.green.shade700),
+                      ),
                     ),
                   ],
                 ),

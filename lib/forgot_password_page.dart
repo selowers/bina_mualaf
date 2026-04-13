@@ -29,6 +29,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         email: users[userIndex].email,
         password: '123456', // Reset to default
         role: users[userIndex].role,
+        avatarPath: users[userIndex].avatarPath,
       );
       await prefs.setString(
         'users',

@@ -37,6 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
       email: _emailController.text,
       password: _passwordController.text,
       role: _selectedRole,
+      avatarPath: '',
     );
 
     users.add(newUser);

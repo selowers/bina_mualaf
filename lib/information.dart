@@ -362,6 +362,7 @@ class _InformasiState extends State<Informasi> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: const Color(0xff44aca0),
       appBar: AppBar(
         backgroundColor: const Color(0xff318c7b),
@@ -562,17 +563,18 @@ class _InformasiState extends State<Informasi> {
   Widget _buildCalonMualafView() {
     return Column(
       children: [
-        Container(
-          margin: const EdgeInsets.all(16),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xff318c7b), Color(0xff5bd4c9)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+        Flexible(
+          child: Container(
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xff318c7b), Color(0xff5bd4c9)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
               const BoxShadow(
                 color: Color.fromRGBO(0, 0, 0, 0.15),
                 blurRadius: 12,
@@ -697,6 +699,7 @@ class _InformasiState extends State<Informasi> {
             ],
           ),
         ),
+      ),
         Expanded(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 12),
@@ -804,7 +807,7 @@ class _InformasiState extends State<Informasi> {
   User? _getUserById(String userId) {
     return _allUsers.firstWhere(
       (user) => user.id == userId,
-      orElse: () => User(id: '', nama: '', email: '', password: '', role: ''),
+      orElse: () => User(id: '', nama: '', email: '', password: '', role: '', avatarPath: ''),
     );
   }
 
