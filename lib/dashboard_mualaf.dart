@@ -58,6 +58,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
   }
 
   int _countTrue(dynamic value) {
+    
     if (value is bool) {
       return value ? 1 : 0;
     }
