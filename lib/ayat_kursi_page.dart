@@ -25,8 +25,10 @@ class _AyatKursiState extends State<AyatKursi> {
                   alignment: Alignment.topLeft,
                   child: IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.arrow_back,
-                        color: Color.fromARGB(255, 34, 26, 148)),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Color.fromARGB(255, 34, 26, 148),
+                    ),
                   ),
                 ),
                 Align(
@@ -114,7 +116,8 @@ class _AyatKursiState extends State<AyatKursi> {
                                 // ignore: prefer_const_constructors
                                 builder: (_) => AlertDialog(
                                   title: const Center(
-                                      child: Text("Tafsir Ayat Kursi")),
+                                    child: Text("Tafsir Ayat Kursi"),
+                                  ),
                                   // ignore: prefer_const_constructors
                                   content: SingleChildScrollView(
                                     // ignore: prefer_const_constructors
@@ -170,9 +173,7 @@ class _AyatKursiState extends State<AyatKursi> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
                     SelectableText(
                       "اَللّٰهُ لَآ اِلٰهَ اِلَّا هُوَۚ اَلْحَيُّ الْقَيُّوْمُ ەۚ لَا تَأْخُذُهٗ سِنَةٌ وَّلَا نَوْمٌۗ  لَهٗ مَا فِى السَّمٰوٰتِ وَمَا فِى الْاَرْضِۗ مَنْ ذَا الَّذِيْ يَشْفَعُ عِنْدَهٗٓ اِلَّا بِاِذْنِهٖۗ يَعْلَمُ مَا بَيْنَ اَيْدِيْهِمْ وَمَا خَلْفَهُمْۚ وَلَا يُحِيْطُوْنَ بِشَيْءٍ مِّنْ عِلْمِهٖٓ اِلَّا بِمَا شَاۤءَۚ وَسِعَ كُرْسِيُّهُ السَّمٰوٰتِ وَالْاَرْضَۚ وَلَا يَـُٔوْدُهٗ حِفْظُهُمَاۚ وَهُوَ الْعَلِيُّ الْعَظِيْمُ",
                       style: TextStyle(
@@ -182,9 +183,7 @@ class _AyatKursiState extends State<AyatKursi> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     Container(
                       margin: const EdgeInsets.only(left: 10, right: 10),
                       child: SelectableText(
@@ -197,17 +196,12 @@ class _AyatKursiState extends State<AyatKursi> {
                         textAlign: TextAlign.justify,
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
+                    const SizedBox(height: 10),
                     Container(
                       margin: const EdgeInsets.only(left: 10, right: 10),
                       child: SelectableText(
                         "Terjemahan : Allah, tidak ada tuhan selain dia. Yang Mahahidup, Yang terus menerus mengurus (makhluk-Nya), tidak mengantuk dan tidak tidur. Milik-Nya apa yang ada di langit dan apa yang ada di bumi. Tidak ada yang dapat memberi syafaat di sisi-Nya tanpa izin-Nya. Dia mengetahui apa yang di hadapan mereka dan apa yang di belakang mereka, dan mereka tidak mengetahui sesuatu apa pun tentang ilmu-Nya melainkan apa yang Dia kehendaki. Kursi-Nya meliputi langit dan bumi. Dan Dia tidak merasa berat memelihara keduanya, dan Dia Mahatinggi, Mahabesar.",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 14),
                         textAlign: TextAlign.justify,
                       ),
                     ),
