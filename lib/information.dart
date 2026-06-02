@@ -88,6 +88,15 @@ class _InformasiState extends State<Informasi> {
   bool _isRecording = false;
   String? _currentPlayingVoice;
 
+  final List<String> _achievementItems = [
+    'Niat Sholat',
+    'Bacaan Sholat',
+    'Ayat Kursi',
+    'Rukun Iman & Islam',
+    'Doa Keseharian',
+  ];
+  Map<String, bool> _achievementStatus = {};
+
   @override
   void initState() {
     super.initState();
@@ -104,6 +113,7 @@ class _InformasiState extends State<Informasi> {
       setState(() {
         _currentUser = User.fromJson(json.decode(currentUserJson));
       });
+      await _loadAchievementStatus();
       // Conversations will be loaded after users are loaded
     }
   }
@@ -165,6 +175,43 @@ class _InformasiState extends State<Informasi> {
       _prefsKey,
       json.encode(_allMessages.map((m) => m.toJson()).toList()),
     );
+  }
+
+  Future<void> _loadAchievementStatus() async {
+    if (_currentUser == null) return;
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'achievement_status_${_currentUser!.id}';
+    final storedJson = prefs.getString(key);
+    if (storedJson != null) {
+      final loaded = json.decode(storedJson) as Map<String, dynamic>;
+      setState(() {
+        _achievementStatus = _achievementItems.fold<Map<String, bool>>({}, (
+          map,
+          item,
+        ) {
+          map[item] = loaded[item] == true;
+          return map;
+        });
+      });
+    } else {
+      setState(() {
+        _achievementStatus = {for (var item in _achievementItems) item: false};
+      });
+    }
+  }
+
+  Future<void> _saveAchievementStatus() async {
+    if (_currentUser == null) return;
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'achievement_status_${_currentUser!.id}';
+    await prefs.setString(key, json.encode(_achievementStatus));
+  }
+
+  void _toggleAchievementStatus(String item, bool value) {
+    setState(() {
+      _achievementStatus[item] = value;
+    });
+    _saveAchievementStatus();
   }
 
   Future<void> _startRecording() async {
@@ -708,6 +755,7 @@ class _InformasiState extends State<Informasi> {
             ),
           ),
         ),
+        // Achievement section removed for calon_mualaf role
         Expanded(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 12),

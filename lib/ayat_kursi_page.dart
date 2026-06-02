@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors, duplicate_ignore
 
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AyatKursi extends StatefulWidget {
-  const AyatKursi({super.key});
+  final String userId;
+  const AyatKursi({super.key, String? userId}) : userId = userId ?? 'guest';
 
   @override
   // ignore: library_private_types_in_public_api
@@ -11,6 +14,34 @@ class AyatKursi extends StatefulWidget {
 }
 
 class _AyatKursiState extends State<AyatKursi> {
+  late String _prefsKey;
+  bool _checked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _prefsKey = 'ayat_kursi_checked_${widget.userId}';
+    _loadChecked();
+  }
+
+  Future<void> _loadChecked() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(_prefsKey);
+    if (jsonString != null) {
+      final decoded = json.decode(jsonString);
+      if (decoded is List && decoded.isNotEmpty && decoded[0] is bool) {
+        setState(() {
+          _checked = decoded[0] as bool;
+        });
+      }
+    }
+  }
+
+  Future<void> _saveChecked() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_prefsKey, json.encode([_checked]));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,6 +118,36 @@ class _AyatKursiState extends State<AyatKursi> {
                       width: 250,
                       height: 200,
                       fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 140,
+                  left: 16,
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.95),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.12),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Checkbox(
+                        value: _checked,
+                        onChanged: (value) {
+                          setState(() {
+                            _checked = value ?? false;
+                          });
+                          _saveChecked();
+                        },
+                      ),
                     ),
                   ),
                 ),

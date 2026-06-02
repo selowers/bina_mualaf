@@ -10,6 +10,7 @@ import 'page/doa_keseharian_page.dart';
 import 'page/murotal.dart';
 import 'ayat_kursi_page.dart';
 import 'information.dart';
+import 'ringkasan_pencapaian_pembimbing.dart';
 import 'edit_profile_page.dart';
 
 class DashboardPembimbing extends StatefulWidget {
@@ -139,6 +140,19 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => Informasi()),
+                        );
+                      },
+                    ),
+                    buildMenu(
+                      imageAsset: "assets/informasi.png",
+                      title: "Ringkasan Pencapaian",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const RingkasanPencapaianPembimbing(),
+                          ),
                         );
                       },
                     ),
