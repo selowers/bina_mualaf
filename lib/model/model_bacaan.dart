@@ -5,13 +5,7 @@ class ModelBacaan {
   String? latin;
   String? terjemahan;
 
-  ModelBacaan({
-    this.id,
-    this.name,
-    this.arabic,
-    this.latin,
-    this.terjemahan,
-  });
+  ModelBacaan({this.id, this.name, this.arabic, this.latin, this.terjemahan});
 
   factory ModelBacaan.fromJson(Map<String, dynamic> json) {
     return ModelBacaan(
@@ -24,10 +18,10 @@ class ModelBacaan {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'arabic': arabic,
-        'latin': latin,
-        'terjemahan': terjemahan,
-      };
+    'id': id,
+    'name': name,
+    'arabic': arabic,
+    'latin': latin,
+    'terjemahan': terjemahan,
+  };
 }

@@ -73,10 +73,12 @@ class _NiatSholatState extends State<NiatSholat> {
   Future<void> _saveSectionsContent(List<SholatSection> sections) async {
     final prefs = await SharedPreferences.getInstance();
     final encoded = sections
-        .map((s) => {
-              'title': s.title,
-              'items': s.items.map((i) => i.toJson()).toList(),
-            })
+        .map(
+          (s) => {
+            'title': s.title,
+            'items': s.items.map((i) => i.toJson()).toList(),
+          },
+        )
         .toList();
     await prefs.setString(_contentKey, json.encode(encoded));
   }
@@ -97,35 +99,54 @@ class _NiatSholatState extends State<NiatSholat> {
           content: SingleChildScrollView(
             child: Column(
               children: [
-                TextField(controller: nameCtrl, decoration: InputDecoration(labelText: 'Judul')),
-                TextField(controller: arabicCtrl, decoration: InputDecoration(labelText: 'Arabic'), maxLines: null),
-                TextField(controller: latinCtrl, decoration: InputDecoration(labelText: 'Latin'), maxLines: null),
-                TextField(controller: terjemahCtrl, decoration: InputDecoration(labelText: 'Terjemahan'), maxLines: null),
+                TextField(
+                  controller: nameCtrl,
+                  decoration: InputDecoration(labelText: 'Judul'),
+                ),
+                TextField(
+                  controller: arabicCtrl,
+                  decoration: InputDecoration(labelText: 'Arabic'),
+                  maxLines: null,
+                ),
+                TextField(
+                  controller: latinCtrl,
+                  decoration: InputDecoration(labelText: 'Latin'),
+                  maxLines: null,
+                ),
+                TextField(
+                  controller: terjemahCtrl,
+                  decoration: InputDecoration(labelText: 'Terjemahan'),
+                  maxLines: null,
+                ),
               ],
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(c), child: const Text('Batal')),
             TextButton(
-                onPressed: () async {
-                  setState(() {
-                    final newItem = ModelNiat(
-                      item?.id ?? DateTime.now().millisecondsSinceEpoch,
-                      nameCtrl.text,
-                      arabicCtrl.text,
-                      latinCtrl.text,
-                      terjemahCtrl.text,
-                    );
-                    if (itemIndex == null) {
-                      items.add(newItem);
-                    } else {
-                      items[itemIndex] = newItem;
-                    }
-                  });
-                  await _saveSectionsContent(sections);
-                  Navigator.pop(c);
-                },
-                child: const Text('Simpan'))
+              onPressed: () => Navigator.pop(c),
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () async {
+                setState(() {
+                  final newItem = ModelNiat(
+                    item?.id ?? DateTime.now().millisecondsSinceEpoch,
+                    nameCtrl.text,
+                    arabicCtrl.text,
+                    latinCtrl.text,
+                    terjemahCtrl.text,
+                  );
+                  if (itemIndex == null) {
+                    items.add(newItem);
+                  } else {
+                    items[itemIndex] = newItem;
+                  }
+                });
+                await _saveSectionsContent(sections);
+                Navigator.pop(c);
+              },
+              child: const Text('Simpan'),
+            ),
           ],
         ),
       );
@@ -345,70 +366,84 @@ class _NiatSholatState extends State<NiatSholat> {
                                     ),
                                   ),
                                   children: [
-                                      if (widget.enableCrud)
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            IconButton(
-                                              icon: const Icon(Icons.edit, color: Color(0xFF4A8CF7)),
-                                              onPressed: () => _openNiatEditDialog(sectionIndex, itemIndex),
+                                    if (widget.enableCrud)
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: Color(0xFF4A8CF7),
                                             ),
-                                            IconButton(
-                                              icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
-                                              onPressed: () async {
-                                                final sections = await _sectionsFuture;
-                                                setState(() {
-                                                  sections[sectionIndex].items.removeAt(itemIndex);
-                                                });
-                                                await _saveSectionsContent(sections);
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      Container(
-                                        padding: EdgeInsets.all(8),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: 8,
-                                              ),
-                                              child: Text(
-                                                item.arabic.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
+                                            onPressed: () =>
+                                                _openNiatEditDialog(
+                                                  sectionIndex,
+                                                  itemIndex,
                                                 ),
-                                              ),
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.delete_outline,
+                                              color: Colors.redAccent,
                                             ),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: 8,
-                                                vertical: 6,
-                                              ),
-                                              child: Text(
-                                                item.latin.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  fontStyle: FontStyle.italic,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: 8,
-                                              ),
-                                              child: Text(
-                                                item.terjemahan.toString(),
-                                                style: TextStyle(fontSize: 12),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                            onPressed: () async {
+                                              final sections =
+                                                  await _sectionsFuture;
+                                              setState(() {
+                                                sections[sectionIndex].items
+                                                    .removeAt(itemIndex);
+                                              });
+                                              await _saveSectionsContent(
+                                                sections,
+                                              );
+                                            },
+                                          ),
+                                        ],
                                       ),
+                                    Container(
+                                      padding: EdgeInsets.all(8),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                            ),
+                                            child: Text(
+                                              item.arabic.toString(),
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 6,
+                                            ),
+                                            child: Text(
+                                              item.latin.toString(),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                            ),
+                                            child: Text(
+                                              item.terjemahan.toString(),
+                                              style: TextStyle(fontSize: 12),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

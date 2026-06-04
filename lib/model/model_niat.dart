@@ -16,10 +16,10 @@ class ModelNiat {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'arabic': arabic,
-        'latin': latin,
-        'terjemahan': terjemahan,
-      };
+    'id': id,
+    'name': name,
+    'arabic': arabic,
+    'latin': latin,
+    'terjemahan': terjemahan,
+  };
 }

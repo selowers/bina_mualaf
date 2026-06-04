@@ -53,7 +53,10 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
 
   Future<void> _saveItems(List<ModelBacaan> items) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_contentKey, json.encode(items.map((e) => e.toJson()).toList()));
+    await prefs.setString(
+      _contentKey,
+      json.encode(items.map((e) => e.toJson()).toList()),
+    );
   }
 
   Future<void> _ensureCheckedLength(int count) async {
@@ -77,40 +80,65 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
         builder: (c) => AlertDialog(
           title: Text(item == null ? 'Tambah' : 'Ubah'),
           content: SingleChildScrollView(
-            child: Column(children: [
-              TextField(controller: nameCtrl, decoration: const InputDecoration(labelText: 'Judul')),
-              TextField(controller: arabicCtrl, decoration: const InputDecoration(labelText: 'Arabic'), maxLines: null),
-              TextField(controller: latinCtrl, decoration: const InputDecoration(labelText: 'Latin'), maxLines: null),
-              TextField(controller: terjemahCtrl, decoration: const InputDecoration(labelText: 'Terjemahan'), maxLines: null),
-            ]),
+            child: Column(
+              children: [
+                TextField(
+                  controller: nameCtrl,
+                  decoration: const InputDecoration(labelText: 'Judul'),
+                ),
+                TextField(
+                  controller: arabicCtrl,
+                  decoration: const InputDecoration(labelText: 'Arabic'),
+                  maxLines: null,
+                ),
+                TextField(
+                  controller: latinCtrl,
+                  decoration: const InputDecoration(labelText: 'Latin'),
+                  maxLines: null,
+                ),
+                TextField(
+                  controller: terjemahCtrl,
+                  decoration: const InputDecoration(labelText: 'Terjemahan'),
+                  maxLines: null,
+                ),
+              ],
+            ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(c), child: const Text('Batal')),
-            TextButton(onPressed: () async {
-              setState(() {
-                final newItem = ModelBacaan(
-                  id: item?.id ?? DateTime.now().millisecondsSinceEpoch,
-                  name: nameCtrl.text,
-                  arabic: arabicCtrl.text,
-                  latin: latinCtrl.text,
-                  terjemahan: terjemahCtrl.text,
-                );
-                if (index == null) {
-                  items.add(newItem);
-                } else {
-                  items[index] = newItem;
-                }
-                // adjust checked length synchronously to avoid RangeError during rebuild
-                if (_checked.length < items.length) {
-                  _checked.addAll(List<bool>.filled(items.length - _checked.length, false));
-                } else if (_checked.length > items.length) {
-                  _checked = _checked.sublist(0, items.length);
-                }
-              });
-              await _saveItems(items);
-              await _saveChecked();
-              Navigator.pop(c);
-            }, child: const Text('Simpan')),
+            TextButton(
+              onPressed: () => Navigator.pop(c),
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () async {
+                setState(() {
+                  final newItem = ModelBacaan(
+                    id: item?.id ?? DateTime.now().millisecondsSinceEpoch,
+                    name: nameCtrl.text,
+                    arabic: arabicCtrl.text,
+                    latin: latinCtrl.text,
+                    terjemahan: terjemahCtrl.text,
+                  );
+                  if (index == null) {
+                    items.add(newItem);
+                  } else {
+                    items[index] = newItem;
+                  }
+                  // adjust checked length synchronously to avoid RangeError during rebuild
+                  if (_checked.length < items.length) {
+                    _checked.addAll(
+                      List<bool>.filled(items.length - _checked.length, false),
+                    );
+                  } else if (_checked.length > items.length) {
+                    _checked = _checked.sublist(0, items.length);
+                  }
+                });
+                await _saveItems(items);
+                await _saveChecked();
+                Navigator.pop(c);
+              },
+              child: const Text('Simpan'),
+            ),
           ],
         ),
       );
@@ -122,7 +150,9 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
       setState(() {
         items.removeAt(index);
         if (_checked.length < items.length) {
-          _checked.addAll(List<bool>.filled(items.length - _checked.length, false));
+          _checked.addAll(
+            List<bool>.filled(items.length - _checked.length, false),
+          );
         } else if (_checked.length > items.length) {
           _checked = _checked.sublist(0, items.length);
         }
@@ -278,11 +308,18 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         IconButton(
-                                          icon: const Icon(Icons.edit, color: Color(0xFF4A8CF7)),
-                                          onPressed: () => _openEditDialog(index),
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            color: Color(0xFF4A8CF7),
+                                          ),
+                                          onPressed: () =>
+                                              _openEditDialog(index),
                                         ),
                                         IconButton(
-                                          icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                                          icon: const Icon(
+                                            Icons.delete_outline,
+                                            color: Colors.redAccent,
+                                          ),
                                           onPressed: () => _deleteItem(index),
                                         ),
                                       ],

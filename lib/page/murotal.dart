@@ -76,7 +76,10 @@ class _MurotalState extends State<Murotal> {
 
   Future<void> _saveItems(List<ModelBacaanSuara> items) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_contentKey, json.encode(items.map((e) => e.toJson()).toList()));
+    await prefs.setString(
+      _contentKey,
+      json.encode(items.map((e) => e.toJson()).toList()),
+    );
   }
 
   Future<void> _ensureCheckedLength(int count) async {
@@ -98,31 +101,48 @@ class _MurotalState extends State<Murotal> {
         builder: (c) => AlertDialog(
           title: Text(item == null ? 'Tambah' : 'Ubah'),
           content: SingleChildScrollView(
-            child: Column(children: [
-              TextField(controller: nameCtrl, decoration: const InputDecoration(labelText: 'Judul')),
-              TextField(controller: suaraCtrl, decoration: const InputDecoration(labelText: 'Asset suara (path)'), maxLines: 1),
-            ]),
+            child: Column(
+              children: [
+                TextField(
+                  controller: nameCtrl,
+                  decoration: const InputDecoration(labelText: 'Judul'),
+                ),
+                TextField(
+                  controller: suaraCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'Asset suara (path)',
+                  ),
+                  maxLines: 1,
+                ),
+              ],
+            ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(c), child: const Text('Batal')),
-            TextButton(onPressed: () async {
-              setState(() {
-                final newItem = ModelBacaanSuara(
-                  id: item?.id ?? DateTime.now().millisecondsSinceEpoch,
-                  name: nameCtrl.text,
-                  latin: item?.latin ?? '',
-                  suara: suaraCtrl.text,
-                );
-                if (index == null) {
-                  items.add(newItem);
-                } else {
-                  items[index] = newItem;
-                }
-              });
-              await _saveItems(items);
-              await _ensureCheckedLength(items.length);
-              Navigator.pop(c);
-            }, child: const Text('Simpan')),
+            TextButton(
+              onPressed: () => Navigator.pop(c),
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () async {
+                setState(() {
+                  final newItem = ModelBacaanSuara(
+                    id: item?.id ?? DateTime.now().millisecondsSinceEpoch,
+                    name: nameCtrl.text,
+                    latin: item?.latin ?? '',
+                    suara: suaraCtrl.text,
+                  );
+                  if (index == null) {
+                    items.add(newItem);
+                  } else {
+                    items[index] = newItem;
+                  }
+                });
+                await _saveItems(items);
+                await _ensureCheckedLength(items.length);
+                Navigator.pop(c);
+              },
+              child: const Text('Simpan'),
+            ),
           ],
         ),
       );
@@ -302,12 +322,20 @@ class _MurotalState extends State<Murotal> {
                                               MainAxisAlignment.end,
                                           children: [
                                             IconButton(
-                                              icon: const Icon(Icons.edit, color: Color(0xFF4A8CF7)),
-                                              onPressed: () => _openEditDialog(index),
+                                              icon: const Icon(
+                                                Icons.edit,
+                                                color: Color(0xFF4A8CF7),
+                                              ),
+                                              onPressed: () =>
+                                                  _openEditDialog(index),
                                             ),
                                             IconButton(
-                                              icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
-                                              onPressed: () => _deleteItem(index),
+                                              icon: const Icon(
+                                                Icons.delete_outline,
+                                                color: Colors.redAccent,
+                                              ),
+                                              onPressed: () =>
+                                                  _deleteItem(index),
                                             ),
                                           ],
                                         ),

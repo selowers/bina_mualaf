@@ -157,7 +157,9 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          _createRoute(const TataCaraWudhuPage(enableCrud: true)),
+                          _createRoute(
+                            const TataCaraWudhuPage(enableCrud: true),
+                          ),
                         );
                       },
                     ),

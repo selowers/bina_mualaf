@@ -24,10 +24,10 @@ class ModelBacaanSuara {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'latin': latin,
-        'terjemahan': terjemahan,
-        'suara': suara,
-      };
+    'id': id,
+    'name': name,
+    'latin': latin,
+    'terjemahan': terjemahan,
+    'suara': suara,
+  };
 }

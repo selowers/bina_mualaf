@@ -31,12 +31,12 @@ class WudhuStep {
   }
 
   Map<String, dynamic> toJson() => {
-        'title': title,
-        'paragraph': paragraph,
-        'arabic': arabic,
-        'latin': latin,
-        'translation': translation,
-      };
+    'title': title,
+    'paragraph': paragraph,
+    'arabic': arabic,
+    'latin': latin,
+    'translation': translation,
+  };
 }
 
 class TataCaraWudhuPage extends StatefulWidget {
@@ -73,7 +73,8 @@ class _TataCaraWudhuPageState extends State<TataCaraWudhuPage> {
       final steps = await _loadSteps(_contentKey);
       setState(() {
         _currentUser = currentUser;
-        _wudhuChecked = checkedString != null && json.decode(checkedString) == true;
+        _wudhuChecked =
+            checkedString != null && json.decode(checkedString) == true;
         _steps = steps;
         _isLoading = false;
       });
@@ -89,10 +90,7 @@ class _TataCaraWudhuPageState extends State<TataCaraWudhuPage> {
   Future<void> _saveWudhuState(bool value) async {
     if (_currentUser == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(
-      _prefsKey,
-      json.encode(value),
-    );
+    await prefs.setString(_prefsKey, json.encode(value));
   }
 
   Future<List<WudhuStep>> _loadSteps(String key) async {
@@ -109,21 +107,30 @@ class _TataCaraWudhuPageState extends State<TataCaraWudhuPage> {
 
   Future<void> _saveSteps() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_contentKey, json.encode(_steps.map((e) => e.toJson()).toList()));
+    await prefs.setString(
+      _contentKey,
+      json.encode(_steps.map((e) => e.toJson()).toList()),
+    );
   }
 
   void _openWudhuStepDialog({WudhuStep? step, int? index}) {
     final titleController = TextEditingController(text: step?.title ?? '');
-    final paragraphController = TextEditingController(text: step?.paragraph ?? '');
+    final paragraphController = TextEditingController(
+      text: step?.paragraph ?? '',
+    );
     final arabicController = TextEditingController(text: step?.arabic ?? '');
     final latinController = TextEditingController(text: step?.latin ?? '');
-    final translationController = TextEditingController(text: step?.translation ?? '');
+    final translationController = TextEditingController(
+      text: step?.translation ?? '',
+    );
 
     showDialog<void>(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text(step == null ? 'Tambah Langkah Wudhu' : 'Ubah Langkah Wudhu'),
+          title: Text(
+            step == null ? 'Tambah Langkah Wudhu' : 'Ubah Langkah Wudhu',
+          ),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -153,7 +160,9 @@ class _TataCaraWudhuPageState extends State<TataCaraWudhuPage> {
                 const SizedBox(height: 10),
                 TextField(
                   controller: translationController,
-                  decoration: const InputDecoration(labelText: 'Terjemahan (opsional)'),
+                  decoration: const InputDecoration(
+                    labelText: 'Terjemahan (opsional)',
+                  ),
                   maxLines: null,
                 ),
               ],
@@ -242,10 +251,8 @@ class _TataCaraWudhuPageState extends State<TataCaraWudhuPage> {
         title: '5. Mengusap Kepala dan Telinga',
         paragraph:
             'Usap sebagian atau seluruh rambut kepala sebanyak 3 kali sambil membaca doa.',
-        arabic:
-            'اَللّٰهُمَّ حَرِّمْ شَعْرِيْ وَبَشَرِيْ عَلَى النَّارِ',
-        latin:
-            'Allaahumma harrim sya\'rii wa basyarii \`alannar.',
+        arabic: 'اَللّٰهُمَّ حَرِّمْ شَعْرِيْ وَبَشَرِيْ عَلَى النَّارِ',
+        latin: 'Allaahumma harrim sya\'rii wa basyarii \`alannar.',
       ),
       WudhuStep(
         title: '6. Membasuh Kaki',
@@ -361,7 +368,7 @@ class _TataCaraWudhuPageState extends State<TataCaraWudhuPage> {
                   activeColor: const Color(0xFF4A8CF7),
                 ),
               ),
-                            const SizedBox(height: 20),
+              const SizedBox(height: 20),
               for (var index = 0; index < _steps.length; index++) ...[
                 _buildWudhuStepCard(_steps[index], index),
                 const SizedBox(height: 16),
@@ -438,7 +445,10 @@ class _TataCaraWudhuPageState extends State<TataCaraWudhuPage> {
               Expanded(
                 child: Text(
                   step.title,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
               if (widget.enableCrud)
@@ -447,11 +457,15 @@ class _TataCaraWudhuPageState extends State<TataCaraWudhuPage> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.edit, color: Color(0xFF4A8CF7)),
-                      onPressed: () => _openWudhuStepDialog(step: step, index: index),
+                      onPressed: () =>
+                          _openWudhuStepDialog(step: step, index: index),
                       tooltip: 'Ubah langkah',
                     ),
                     IconButton(
-                      icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: Colors.redAccent,
+                      ),
                       onPressed: () => _deleteWudhuStep(index),
                       tooltip: 'Hapus langkah',
                     ),
@@ -540,4 +554,3 @@ class _TataCaraWudhuPageState extends State<TataCaraWudhuPage> {
     );
   }
 }
-
