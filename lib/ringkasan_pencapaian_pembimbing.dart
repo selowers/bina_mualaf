@@ -24,6 +24,7 @@ class _RingkasanPencapaianPembimbingState
     'Rukun Iman & Islam',
     'Doa Keseharian',
     'Murotal',
+    'Wudhu',
   ];
 
   List<User> _calonMualaf = [];
@@ -84,6 +85,10 @@ class _RingkasanPencapaianPembimbingState
         prefs,
         'murotal_checked_${calon.id}',
       );
+      final wudhuChecked = await _getCheckedCount(
+        prefs,
+        'wudhu_checked_${calon.id}',
+      );
 
       final completedSubItems =
           niatChecked +
@@ -91,14 +96,16 @@ class _RingkasanPencapaianPembimbingState
           ayatKursiChecked +
           rukunChecked +
           doaChecked +
-          murotalChecked;
+          murotalChecked +
+          wudhuChecked;
       final totalSubItems =
           niatTotal +
           bacaanTotal +
           ayatKursiTotal +
           rukunTotal +
           doaTotal +
-          murotalTotal;
+          murotalTotal +
+          1;
 
       statuses[calon.id] = {
         'Niat & Bacaan Sholat':
@@ -107,6 +114,7 @@ class _RingkasanPencapaianPembimbingState
         'Rukun Iman & Islam': rukunChecked >= rukunTotal,
         'Doa Keseharian': doaChecked >= doaTotal,
         'Murotal': murotalChecked >= murotalTotal,
+        'Wudhu': wudhuChecked >= 1,
       };
       _subItemCompletedCount[calon.id] = completedSubItems;
       _subItemTotalCount[calon.id] = totalSubItems;
@@ -155,6 +163,28 @@ class _RingkasanPencapaianPembimbingState
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  Route _createRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position:
+                Tween<Offset>(
+                  begin: const Offset(0.2, 0),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(parent: animation, curve: Curves.easeOut),
+                ),
+            child: child,
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 360),
+    );
   }
 
   @override
@@ -251,15 +281,13 @@ class _RingkasanPencapaianPembimbingState
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          RingkasanPencapaianDetail(
-                                            calon: calon,
-                                            achievementItems: _achievementItems,
-                                            achievementStatus:
-                                                _achievementStatus[calon.id] ??
-                                                {},
-                                          ),
+                                    _createRoute(
+                                      RingkasanPencapaianDetail(
+                                        calon: calon,
+                                        achievementItems: _achievementItems,
+                                        achievementStatus:
+                                            _achievementStatus[calon.id] ?? {},
+                                      ),
                                     ),
                                   );
                                 },

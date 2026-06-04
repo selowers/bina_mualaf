@@ -9,8 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class RukunImanIslam extends StatefulWidget {
   final String userId;
+  final bool enableCrud;
 
-  const RukunImanIslam({super.key, String? userId})
+  const RukunImanIslam({super.key, String? userId, this.enableCrud = false})
     : userId = userId ?? 'guest';
 
   @override
@@ -22,6 +23,7 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
   late String _prefsKey;
   late Future<List<ModelBacaan>> _itemsFuture;
   List<bool> _checked = [];
+  late String _contentKey;
 
   @override
   void initState() {
@@ -32,8 +34,102 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
 
   Future<List<ModelBacaan>> _loadItems() async {
     final items = await readJsonData();
+    _contentKey = 'rukun_iman_islam_content_${widget.userId}';
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(_contentKey);
+    if (jsonString != null) {
+      try {
+        final decoded = json.decode(jsonString) as List<dynamic>;
+        final loaded = decoded
+            .map((e) => ModelBacaan.fromJson(e as Map<String, dynamic>))
+            .toList();
+        await _loadChecked(loaded.length);
+        return loaded;
+      } catch (_) {}
+    }
     await _loadChecked(items.length);
     return items;
+  }
+
+  Future<void> _saveItems(List<ModelBacaan> items) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_contentKey, json.encode(items.map((e) => e.toJson()).toList()));
+  }
+
+  Future<void> _ensureCheckedLength(int count) async {
+    if (_checked.length < count) {
+      _checked.addAll(List<bool>.filled(count - _checked.length, false));
+    } else if (_checked.length > count) {
+      _checked = _checked.sublist(0, count);
+    }
+    await _saveChecked();
+  }
+
+  void _openEditDialog([int? index]) {
+    _itemsFuture.then((items) {
+      final ModelBacaan? item = (index != null) ? items[index] : null;
+      final nameCtrl = TextEditingController(text: item?.name ?? '');
+      final arabicCtrl = TextEditingController(text: item?.arabic ?? '');
+      final latinCtrl = TextEditingController(text: item?.latin ?? '');
+      final terjemahCtrl = TextEditingController(text: item?.terjemahan ?? '');
+      showDialog<void>(
+        context: context,
+        builder: (c) => AlertDialog(
+          title: Text(item == null ? 'Tambah' : 'Ubah'),
+          content: SingleChildScrollView(
+            child: Column(children: [
+              TextField(controller: nameCtrl, decoration: const InputDecoration(labelText: 'Judul')),
+              TextField(controller: arabicCtrl, decoration: const InputDecoration(labelText: 'Arabic'), maxLines: null),
+              TextField(controller: latinCtrl, decoration: const InputDecoration(labelText: 'Latin'), maxLines: null),
+              TextField(controller: terjemahCtrl, decoration: const InputDecoration(labelText: 'Terjemahan'), maxLines: null),
+            ]),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(c), child: const Text('Batal')),
+            TextButton(onPressed: () async {
+              setState(() {
+                final newItem = ModelBacaan(
+                  id: item?.id ?? DateTime.now().millisecondsSinceEpoch,
+                  name: nameCtrl.text,
+                  arabic: arabicCtrl.text,
+                  latin: latinCtrl.text,
+                  terjemahan: terjemahCtrl.text,
+                );
+                if (index == null) {
+                  items.add(newItem);
+                } else {
+                  items[index] = newItem;
+                }
+                // adjust checked length synchronously to avoid RangeError during rebuild
+                if (_checked.length < items.length) {
+                  _checked.addAll(List<bool>.filled(items.length - _checked.length, false));
+                } else if (_checked.length > items.length) {
+                  _checked = _checked.sublist(0, items.length);
+                }
+              });
+              await _saveItems(items);
+              await _saveChecked();
+              Navigator.pop(c);
+            }, child: const Text('Simpan')),
+          ],
+        ),
+      );
+    });
+  }
+
+  Future<void> _deleteItem(int index) async {
+    _itemsFuture.then((items) async {
+      setState(() {
+        items.removeAt(index);
+        if (_checked.length < items.length) {
+          _checked.addAll(List<bool>.filled(items.length - _checked.length, false));
+        } else if (_checked.length > items.length) {
+          _checked = _checked.sublist(0, items.length);
+        }
+      });
+      await _saveItems(items);
+      await _saveChecked();
+    });
   }
 
   Future<void> _loadChecked(int count) async {
@@ -66,7 +162,7 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(228, 47, 15, 1),
+      backgroundColor: const Color(0xFFFFF3E0),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -86,7 +182,7 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                     margin: const EdgeInsets.only(top: 80),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: const Color.fromARGB(255, 235, 225, 93),
+                      color: const Color(0xFFFBE9E7),
                     ),
                     height: 200,
                     width: MediaQuery.of(context).size.width,
@@ -177,6 +273,20 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                                   ),
                                 ),
                                 children: [
+                                  if (widget.enableCrud)
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.edit, color: Color(0xFF4A8CF7)),
+                                          onPressed: () => _openEditDialog(index),
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                                          onPressed: () => _deleteItem(index),
+                                        ),
+                                      ],
+                                    ),
                                   Container(
                                     padding: EdgeInsets.all(8),
                                     child: Row(
@@ -246,6 +356,12 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
           ],
         ),
       ),
+      floatingActionButton: widget.enableCrud
+          ? FloatingActionButton(
+              onPressed: () => _openEditDialog(),
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 }

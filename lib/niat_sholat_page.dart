@@ -19,8 +19,10 @@ class SholatSection {
 
 class NiatSholat extends StatefulWidget {
   final String userId;
+  final bool enableCrud;
 
-  const NiatSholat({super.key, String? userId}) : userId = userId ?? 'guest';
+  const NiatSholat({super.key, String? userId, this.enableCrud = false})
+    : userId = userId ?? 'guest';
 
   @override
   // ignore: library_private_types_in_public_api
@@ -31,6 +33,7 @@ class _NiatSholatState extends State<NiatSholat> {
   late String _prefsKey;
   late Future<List<SholatSection>> _sectionsFuture;
   List<List<bool>> _sectionChecked = [];
+  late String _contentKey;
 
   @override
   void initState() {
@@ -41,8 +44,92 @@ class _NiatSholatState extends State<NiatSholat> {
 
   Future<List<SholatSection>> _loadSections() async {
     final sections = await readJsonData();
+    _contentKey = 'niat_sholat_content_${widget.userId}';
+    // override with persisted content when available
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(_contentKey);
+    if (jsonString != null) {
+      try {
+        final decoded = json.decode(jsonString) as List<dynamic>;
+        final loaded = <SholatSection>[];
+        for (var s in decoded) {
+          final map = s as Map<String, dynamic>;
+          final title = map['title'] as String;
+          final items = (map['items'] as List<dynamic>)
+              .map((e) => ModelNiat.fromJson(e as Map<String, dynamic>))
+              .toList();
+          loaded.add(SholatSection(title: title, items: items));
+        }
+        await _loadSectionChecks(loaded);
+        return loaded;
+      } catch (_) {
+        // fall back to assets
+      }
+    }
     await _loadSectionChecks(sections);
     return sections;
+  }
+
+  Future<void> _saveSectionsContent(List<SholatSection> sections) async {
+    final prefs = await SharedPreferences.getInstance();
+    final encoded = sections
+        .map((s) => {
+              'title': s.title,
+              'items': s.items.map((i) => i.toJson()).toList(),
+            })
+        .toList();
+    await prefs.setString(_contentKey, json.encode(encoded));
+  }
+
+  void _openNiatEditDialog(int sectionIndex, [int? itemIndex]) {
+    final section = (_sectionsFuture as Future<List<SholatSection>>);
+    section.then((sections) {
+      final items = sections[sectionIndex].items;
+      final ModelNiat? item = (itemIndex != null) ? items[itemIndex] : null;
+      final nameCtrl = TextEditingController(text: item?.name ?? '');
+      final arabicCtrl = TextEditingController(text: item?.arabic ?? '');
+      final latinCtrl = TextEditingController(text: item?.latin ?? '');
+      final terjemahCtrl = TextEditingController(text: item?.terjemahan ?? '');
+      showDialog<void>(
+        context: context,
+        builder: (c) => AlertDialog(
+          title: Text(item == null ? 'Tambah Niat/Bacaan' : 'Ubah'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextField(controller: nameCtrl, decoration: InputDecoration(labelText: 'Judul')),
+                TextField(controller: arabicCtrl, decoration: InputDecoration(labelText: 'Arabic'), maxLines: null),
+                TextField(controller: latinCtrl, decoration: InputDecoration(labelText: 'Latin'), maxLines: null),
+                TextField(controller: terjemahCtrl, decoration: InputDecoration(labelText: 'Terjemahan'), maxLines: null),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(c), child: const Text('Batal')),
+            TextButton(
+                onPressed: () async {
+                  setState(() {
+                    final newItem = ModelNiat(
+                      item?.id ?? DateTime.now().millisecondsSinceEpoch,
+                      nameCtrl.text,
+                      arabicCtrl.text,
+                      latinCtrl.text,
+                      terjemahCtrl.text,
+                    );
+                    if (itemIndex == null) {
+                      items.add(newItem);
+                    } else {
+                      items[itemIndex] = newItem;
+                    }
+                  });
+                  await _saveSectionsContent(sections);
+                  Navigator.pop(c);
+                },
+                child: const Text('Simpan'))
+          ],
+        ),
+      );
+    });
   }
 
   Future<void> _loadSectionChecks(List<SholatSection> sections) async {
@@ -115,7 +202,7 @@ class _NiatSholatState extends State<NiatSholat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 114, 89, 224),
+      backgroundColor: const Color(0xFFE6EBFF),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -135,7 +222,7 @@ class _NiatSholatState extends State<NiatSholat> {
                     margin: EdgeInsets.only(top: 80),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: Color.fromARGB(255, 95, 207, 235),
+                      color: const Color(0xFFD6E7FF),
                     ),
                     height: 200,
                     width: MediaQuery.of(context).size.width,
@@ -258,49 +345,70 @@ class _NiatSholatState extends State<NiatSholat> {
                                     ),
                                   ),
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 8,
+                                      if (widget.enableCrud)
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            IconButton(
+                                              icon: const Icon(Icons.edit, color: Color(0xFF4A8CF7)),
+                                              onPressed: () => _openNiatEditDialog(sectionIndex, itemIndex),
                                             ),
-                                            child: Text(
-                                              item.arabic.toString(),
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
+                                            IconButton(
+                                              icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                                              onPressed: () async {
+                                                final sections = await _sectionsFuture;
+                                                setState(() {
+                                                  sections[sectionIndex].items.removeAt(itemIndex);
+                                                });
+                                                await _saveSectionsContent(sections);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      Container(
+                                        padding: EdgeInsets.all(8),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                              ),
+                                              child: Text(
+                                                item.arabic.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 8,
-                                              vertical: 6,
-                                            ),
-                                            child: Text(
-                                              item.latin.toString(),
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontStyle: FontStyle.italic,
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                                vertical: 6,
+                                              ),
+                                              child: Text(
+                                                item.latin.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontStyle: FontStyle.italic,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 8,
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                              ),
+                                              child: Text(
+                                                item.terjemahan.toString(),
+                                                style: TextStyle(fontSize: 12),
+                                              ),
                                             ),
-                                            child: Text(
-                                              item.terjemahan.toString(),
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -320,6 +428,29 @@ class _NiatSholatState extends State<NiatSholat> {
           ],
         ),
       ),
+      floatingActionButton: widget.enableCrud
+          ? FloatingActionButton(
+              onPressed: () async {
+                final sections = await _sectionsFuture;
+                showDialog<void>(
+                  context: context,
+                  builder: (c) => SimpleDialog(
+                    title: const Text('Pilih Section untuk menambah'),
+                    children: List<Widget>.generate(sections.length, (i) {
+                      return SimpleDialogOption(
+                        onPressed: () {
+                          Navigator.pop(c);
+                          _openNiatEditDialog(i);
+                        },
+                        child: Text(sections[i].title),
+                      );
+                    }),
+                  ),
+                );
+              },
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 }

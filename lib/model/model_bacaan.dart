@@ -22,4 +22,12 @@ class ModelBacaan {
       terjemahan: json['terjemahan'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'arabic': arabic,
+        'latin': latin,
+        'terjemahan': terjemahan,
+      };
 }

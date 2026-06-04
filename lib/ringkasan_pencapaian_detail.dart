@@ -234,6 +234,7 @@ class _RingkasanPencapaianDetailState extends State<RingkasanPencapaianDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F9FF),
       appBar: AppBar(
         title: const Text('Detail Pencapaian'),
         backgroundColor: const Color(0xFF4A8CF7),
@@ -282,88 +283,171 @@ class _RingkasanPencapaianDetailState extends State<RingkasanPencapaianDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 28,
-                        backgroundColor: const Color(0xFF4A8CF7),
-                        child: Text(
-                          widget.calon.nama.isNotEmpty
-                              ? widget.calon.nama[0].toUpperCase()
-                              : 'C',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(26),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.06),
+                          blurRadius: 24,
+                          offset: const Offset(0, 10),
                         ),
-                      ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Text(
-                              widget.calon.nama,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundColor: const Color(0xFF4A8CF7),
+                              child: Text(
+                                widget.calon.nama.isNotEmpty
+                                    ? widget.calon.nama[0].toUpperCase()
+                                    : 'C',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 6),
-                            Text(
-                              widget.calon.email,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black54,
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.calon.nama,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    widget.calon.email,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(
+                                  0xFF4A8CF7,
+                                ).withOpacity(0.12),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Text(
+                                overallPercentLabel,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFF4A8CF7),
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      Text(
-                        overallPercentLabel,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF4A8CF7),
+                        const SizedBox(height: 22),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(18),
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: 14,
+                                color: const Color(0xFFEAF4FF),
+                              ),
+                              FractionallySizedBox(
+                                widthFactor: overallPercentDisplay.clamp(
+                                  0.0,
+                                  1.0,
+                                ),
+                                child: Container(
+                                  height: 14,
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFF4A8CF7),
+                                        Color(0xFF91D9FF),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 22),
-                  const Text(
-                    'Ringkasan Progres',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 12),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: LinearProgressIndicator(
-                      value: overallPercentDisplay,
-                      minHeight: 12,
-                      backgroundColor: const Color(0xFFE3F1FF),
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                        Color(0xFF4A8CF7),
-                      ),
+                        const SizedBox(height: 14),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Sub-materi selesai',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '$completedSubItems dari $totalSubItems',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Tingkat penyelesaian',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    overallPercentLabel,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    'Selesai $completedSubItems dari $totalSubItems sub-materi',
-                    style: const TextStyle(color: Colors.black54),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Sub-materi selesai $completedSubItems dari $totalSubItems',
-                    style: const TextStyle(color: Colors.black54),
-                  ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 22),
                   const Text(
                     'Detail Materi',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 14),
                   ...groups.map((group) => _buildGroupCard(group)).toList(),
                 ],
               ),
@@ -375,108 +459,206 @@ class _RingkasanPencapaianDetailState extends State<RingkasanPencapaianDetail> {
   }
 
   Widget _buildGroupCard(_GroupProgress group) {
-    final done = group.isComplete;
+    final groupPercent = group.totalCount == 0
+        ? 0.0
+        : group.checkedCount / group.totalCount;
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: done ? const Color(0xFFE8F7FF) : const Color(0xFFF6F6F6),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: done ? const Color(0xFF4A8CF7) : const Color(0xFFDADADA),
-        ),
-      ),
-      child: ExpansionTile(
-        tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        childrenPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 8,
-        ),
-        title: Text(
-          group.title,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: done ? const Color(0xFF0F3A7D) : Colors.black87,
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
           ),
-        ),
-        subtitle: Text(
-          '${group.checkedCount} dari ${group.totalCount} sub-materi selesai',
-          style: const TextStyle(color: Colors.black54),
-        ),
-        trailing: Icon(
-          done ? Icons.check_circle : Icons.expand_more,
-          color: done ? const Color(0xFF4A8CF7) : Colors.black54,
-        ),
-        children: group.subgroups.map(_buildSubgroupCard).toList(),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  group.title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF4A8CF7).withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Text(
+                  '${(groupPercent * 100).round()}%',
+                  style: const TextStyle(
+                    color: Color(0xFF4A8CF7),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Stack(
+              children: [
+                Container(height: 12, color: const Color(0xFFEAF4FF)),
+                FractionallySizedBox(
+                  widthFactor: groupPercent.clamp(0.0, 1.0),
+                  child: Container(
+                    height: 12,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xFF4A8CF7), Color(0xFF91D9FF)],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 14),
+          ...group.subgroups.map(_buildSubgroupCard).toList(),
+        ],
       ),
     );
   }
 
   Widget _buildSubgroupCard(_SubgroupProgress subgroup) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: Text(
+    final subgroupPercent = subgroup.totalCount == 0
+        ? 0.0
+        : subgroup.checkedCount / subgroup.totalCount;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF7F9FF),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
             subgroup.title,
             style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
-        ),
-        Text(
-          '${subgroup.checkedCount} dari ${subgroup.totalCount} sub-materi selesai',
-          style: const TextStyle(color: Colors.black54),
-        ),
-        const SizedBox(height: 8),
-        ...subgroup.itemTitles.asMap().entries.map((entry) {
-          final index = entry.key;
-          final title = entry.value;
-          final isChecked =
-              index < subgroup.itemStatuses.length &&
-              subgroup.itemStatuses[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 6),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Checkbox(
-                  value: isChecked,
-                  onChanged: null,
-                  activeColor: const Color(0xFF4A8CF7),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${subgroup.checkedCount} dari ${subgroup.totalCount} sub-materi selesai',
+                  style: const TextStyle(color: Colors.black54, fontSize: 13),
                 ),
-                const SizedBox(width: 4),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: isChecked ? Colors.black87 : Colors.black54,
-                        ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF4A8CF7).withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  '${(subgroupPercent * 100).round()}%',
+                  style: const TextStyle(
+                    color: Color(0xFF4A8CF7),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Stack(
+              children: [
+                Container(height: 10, color: const Color(0xFFE3F1FF)),
+                FractionallySizedBox(
+                  widthFactor: subgroupPercent.clamp(0.0, 1.0),
+                  child: Container(
+                    height: 10,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xFF4A8CF7), Color(0xFF91D9FF)],
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        isChecked
-                            ? 'Tercentang oleh mualaf'
-                            : 'Belum dicentang oleh mualaf',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: isChecked
-                              ? const Color(0xFF4A8CF7)
-                              : Colors.black38,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ],
             ),
-          );
-        }).toList(),
-        const SizedBox(height: 8),
-      ],
+          ),
+          const SizedBox(height: 12),
+          Column(
+            children: subgroup.itemTitles.asMap().entries.map((entry) {
+              final index = entry.key;
+              final title = entry.value;
+              final isChecked =
+                  index < subgroup.itemStatuses.length &&
+                  subgroup.itemStatuses[index];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      isChecked ? Icons.check_circle : Icons.circle_outlined,
+                      color: isChecked
+                          ? const Color(0xFF4A8CF7)
+                          : Colors.black26,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: isChecked
+                                  ? Colors.black87
+                                  : Colors.black54,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            isChecked
+                                ? 'Sudah selesai oleh mualaf'
+                                : 'Belum selesai',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: isChecked
+                                  ? const Color(0xFF4A8CF7)
+                                  : Colors.black38,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
     );
   }
 }

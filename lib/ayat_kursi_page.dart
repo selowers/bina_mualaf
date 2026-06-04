@@ -6,7 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AyatKursi extends StatefulWidget {
   final String userId;
-  const AyatKursi({super.key, String? userId}) : userId = userId ?? 'guest';
+  final bool enableCrud;
+
+  const AyatKursi({super.key, String? userId, this.enableCrud = false})
+    : userId = userId ?? 'guest';
 
   @override
   // ignore: library_private_types_in_public_api
@@ -15,13 +18,61 @@ class AyatKursi extends StatefulWidget {
 
 class _AyatKursiState extends State<AyatKursi> {
   late String _prefsKey;
+  late String _contentKey;
   bool _checked = false;
+  String _tafsir =
+      '''Allah adalah Tuhan Yang Maha Esa, tidak ada tuhan selain Dia, dan hanya Dia yang berhak untuk disembah. Adapun tuhan-tuhan yang lain yang disembah oleh sebagian manusia dengan alasan yang tidak benar, memang banyak jumlahnya. Akan tetapi Tuhan yang sebenarnya hanyalah Allah. Hanya Dialah Yang hidup abadi, yang ada dengan sendiri-Nya, dan Dia pulalah yang selalu mengatur makhluk-Nya tanpa ada kelalaian sedikit pun.
+
+Kemudian ditegaskan lagi bahwa Allah tidak pernah mengantuk. Orang yang berada dalam keadaan mengantuk tentu hilang kesadarannya, sehingga dia tidak akan dapat melakukan pekerjaannya dengan baik, padahal Allah swt senantiasa mengurus dan memelihara makhluk-Nya dengan baik, tidak pernah kehilangan kesadaran atau pun lalai.
+
+Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena mengantuk adalah permulaan dari proses tidur. Orang yang tidur lebih banyak kehilangan kesadaran daripada orang yang mengantuk. Orang yang tidur lebih banyak kehilangan kesadaran daripada orang yang mengantuk. Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur.''';
+  String _ayatText =
+      'اَللّٰهُ لَآ اِلٰهَ اِلَّا هُوَۚ اَلْحَيُّ الْقَيُّوْمُ ەۚ لَا تَأْخُذُهٗ سِنَةٌ وَّلَا نَوْمٌۗ  لَهٗ مَا فِى السَّمٰوٰتِ وَمَا فِى الْاَرْضِۗ مَنْ ذَا الَّذِيْ يَشْفَعُ عِنْدَهٗٓ اِلَّا بِاِذْنِهٖۗ يَعْلَمُ مَا بَيْنَ اَيْدِيْهِمْ وَمَا خَلْفَهُمْۚ وَلَا يُحِيْطُوْنَ بِشَيْءٍ مِّنْ عِلْمِهٖٓ اِلَّا بِمَا شَآءَۚ وَسِعَ كُرْسِيُّهُ السَّمٰوٰتِ وَالْاَرْضِۚ وَلَا يَـُٔوْدُهٗ حِفْظُهُمَاۚ وَهُوَ الْعَلِيُّ الْعَظِيْمُ';
+  String _latin =
+      'Allaahu laa ilaaha illaa huwal hayyul qoyyuum, laa ta’khudzuhuu sinatuw walaa naum. Lahuu maa fissamaawaati wa maa fil ardli man dzal ladzii yasyfa’u ‘indahuu illaa biidznih, ya’lamu maa baina aidiihim wa maa kholfahum wa laa yuhiithuuna bisyai’im min ‘ilmihii illaa bimaa syaa’ wasi’a kursiyyuhus samaawaati wal ardlo walaa ya’uuduhuu hifdhuhumaa wahuwal ‘aliyyul ‘adhiim.';
+  String _translation =
+      'Allah adalah Tuhan Yang Maha Hidup dan terus-menerus mengurus makhluk-Nya. Dia tidak mengantuk dan tidak pernah letih; segala sesuatu di langit dan di bumi berada dalam kekuasaan-Nya. Tidak ada yang dapat memberi syafaat kecuali dengan izin-Nya, dan ilmu-Nya meliputi segala sesuatu.';
 
   @override
   void initState() {
     super.initState();
     _prefsKey = 'ayat_kursi_checked_${widget.userId}';
+    _contentKey = 'ayat_kursi_content';
     _loadChecked();
+    _loadContent();
+  }
+
+  Future<void> _loadContent() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(_contentKey);
+    if (jsonString != null) {
+      final decoded = json.decode(jsonString) as Map<String, dynamic>;
+      setState(() {
+        _ayatText = decoded['ayat'] ?? _ayatText;
+        _latin = decoded['latin'] ?? _latin;
+        _translation = decoded['translation'] ?? _translation;
+        _tafsir = decoded['tafsir'] ?? _tafsir;
+      });
+    }
+  }
+
+  Future<void> _saveContent() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      _contentKey,
+      json.encode({
+        'ayat': _ayatText,
+        'latin': _latin,
+        'translation': _translation,
+        'tafsir': _tafsir,
+      }),
+    );
+  }
+
+  Future<void> _resetContent() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_contentKey);
+    await _loadContent();
   }
 
   Future<void> _loadChecked() async {
@@ -42,10 +93,126 @@ class _AyatKursiState extends State<AyatKursi> {
     await prefs.setString(_prefsKey, json.encode([_checked]));
   }
 
+  void _openAyatEditDialog() {
+    final ayatController = TextEditingController(text: _ayatText);
+    final latinController = TextEditingController(text: _latin);
+    final translationController = TextEditingController(text: _translation);
+    final tafsirController = TextEditingController(text: _tafsir);
+
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Edit Ayat Kursi'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: ayatController,
+                  maxLines: null,
+                  decoration: const InputDecoration(labelText: 'Ayat (Arab)'),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: latinController,
+                  maxLines: null,
+                  decoration: const InputDecoration(labelText: 'Latin'),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: translationController,
+                  maxLines: null,
+                  decoration: const InputDecoration(labelText: 'Terjemahan'),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: tafsirController,
+                  maxLines: null,
+                  decoration: const InputDecoration(labelText: 'Tafsir'),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () async {
+                setState(() {
+                  _ayatText = ayatController.text;
+                  _latin = latinController.text;
+                  _translation = translationController.text;
+                  _tafsir = tafsirController.text;
+                });
+                await _saveContent();
+                Navigator.of(context).pop();
+              },
+              child: const Text('Simpan'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Ayat Kursi'),
+        backgroundColor: const Color(0xff0e1446),
+        actions: [
+          if (widget.enableCrud)
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: _openAyatEditDialog,
+              tooltip: 'Ubah Data',
+            ),
+          if (widget.enableCrud)
+            IconButton(
+              icon: const Icon(Icons.delete_outline),
+              onPressed: () async {
+                final confirmed =
+                    await showDialog<bool>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Hapus Data'),
+                        content: const Text(
+                          'Reset konten Ayat Kursi ke versi bawaan?',
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: const Text('Batal'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            child: const Text('Reset'),
+                          ),
+                        ],
+                      ),
+                    ) ??
+                    false;
+                if (confirmed) {
+                  await _resetContent();
+                }
+              },
+              tooltip: 'Reset Data',
+            ),
+        ],
+      ),
       backgroundColor: const Color(0xff44aca0),
+      floatingActionButton: widget.enableCrud
+          ? FloatingActionButton.extended(
+              onPressed: _openAyatEditDialog,
+              label: const Text('Tambah / Ubah'),
+              icon: const Icon(Icons.add),
+              backgroundColor: const Color(0xff0e1446),
+            )
+          : null,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -183,7 +350,7 @@ class _AyatKursiState extends State<AyatKursi> {
                                   content: SingleChildScrollView(
                                     // ignore: prefer_const_constructors
                                     child: Text(
-                                      "Allah adalah Tuhan Yang Maha Esa, tidak ada tuhan selain Dia, dan hanya Dia yang berhak untuk disembah. Adapun tuhan-tuhan yang lain yang disembah oleh sebagian manusia dengan alasan yang tidak benar, memang banyak jumlahnya. Akan tetapi Tuhan yang sebenarnya hanyalah Allah. Hanya Dialah Yang hidup abadi, yang ada dengan sendiri-Nya, dan Dia pulalah yang selalu mengatur makhluk-Nya tanpa ada kelalaian sedikit pun.\n\nKemudian ditegaskan lagi bahwa Allah tidak pernah mengantuk. Orang yang berada dalam keadaan mengantuk tentu hilang kesadarannya, sehingga dia tidak akan dapat melakukan pekerjaannya dengan baik, padahal Allah swt senantiasa mengurus dan memelihara makhluk-Nya dengan baik, tidak pernah kehilangan kesadaran atau pun lalai.\n\nKarena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena mengantuk adalah permulaan dari proses tidur. Orang yang tidur lebih banyak kehilangan kesadaran daripada orang yang mengantuk.\n\nSifat Allah yang lain yang disebutkan dalam ayat ini ialah bahwa Dialah yang mempunyai kekuasaan dan yang memiliki apa yang ada di langit dan di bumi. Dialah yang mempunyai kekuatan dan kekuasaan yang tak terbatas, sehingga Dia dapat berbuat apa yang dikehendaki-Nya. Semuanya ada dalam kekuasaan-Nya, sehingga tidak ada satu pun dari makhluk-Nya termasuk para nabi dan para malaikat yang dapat memberikan pertolongan kecuali dengan izin-Nya, apalagi patung-patung yang oleh orang-orang kafir dianggap sebagai penolong mereka.\n\nYang dimaksud dengan \"pertolongan\" atau \"syafaat\" dalam ayat ini ialah pertolongan yang diberikan oleh para malaikat, nabi dan orang-orang saleh kepada umat manusia pada hari kiamat untuk mendapatkan keringanan atau kebebasan dari hukuman Allah. Syafaat itu akan terjadi atas izin Allah. Dalam hadis disebutkan :\n\nNabi Saw bersabda, \"¦Kemudian Allah berfirman, \"Para Malaikat memberikan syafaat, para Nabi memberikan syafaat, dan orang-orang mukmin juga memberikan syafaat. (Riwayat Ahmad dan Muslim dari Abu Sa'id al-Khudri)\n\nSifat Allah yang lain yang disebutkan dalam ayat ini ialah: bahwa Allah senantiasa mengetahui apa saja yang terjadi di hadapan dan di belakang makhluk-Nya, sedang mereka tidak mengetahui sesuatu pun dari ilmu Allah, melainkan sekadar apa yang dikehendaki-Nya untuk mereka ketahui. Kursi Allah mencakup langit dan bumi. Allah tidak merasa berat sedikit pun dalam memelihara makhluk-Nya yang berada di langit dan di bumi, dan di semua alam ciptaan-Nya. Allah Mahatinggi lagi Mahabesar.\n\nMereka tidak mengetahui ilmu Allah, kecuali apa yang telah dikehendaki-Nya untuk mereka ketahui. Dengan demikian, yang dapat diketahui oleh manusia hanyalah sekadar apa yang dapat dijangkau oleh pengetahuan yang telah dikaruniakan Allah kepada mereka, dan jumlahnya amat sedikit dibanding dengan ilmu-Nya yang luas. Hal ini ditegaskan Allah dalam firman-Nya:\n\n\"Sedangkan kamu diberi pengetahuan hanya sedikit.\" (al-Isra' 17:85)",
+                                      _tafsir,
                                       textAlign: TextAlign.justify,
                                     ),
                                   ),
@@ -236,7 +403,7 @@ class _AyatKursiState extends State<AyatKursi> {
                     ),
                     const SizedBox(height: 20),
                     SelectableText(
-                      "اَللّٰهُ لَآ اِلٰهَ اِلَّا هُوَۚ اَلْحَيُّ الْقَيُّوْمُ ەۚ لَا تَأْخُذُهٗ سِنَةٌ وَّلَا نَوْمٌۗ  لَهٗ مَا فِى السَّمٰوٰتِ وَمَا فِى الْاَرْضِۗ مَنْ ذَا الَّذِيْ يَشْفَعُ عِنْدَهٗٓ اِلَّا بِاِذْنِهٖۗ يَعْلَمُ مَا بَيْنَ اَيْدِيْهِمْ وَمَا خَلْفَهُمْۚ وَلَا يُحِيْطُوْنَ بِشَيْءٍ مِّنْ عِلْمِهٖٓ اِلَّا بِمَا شَاۤءَۚ وَسِعَ كُرْسِيُّهُ السَّمٰوٰتِ وَالْاَرْضَۚ وَلَا يَـُٔوْدُهٗ حِفْظُهُمَاۚ وَهُوَ الْعَلِيُّ الْعَظِيْمُ",
+                      "اَللّٰهُ لَآ اِلٰهَ اِلَّا هُوَۚ اَلْحَيُّ الْقَيٌّوْمُ ەۚ لَا تَأْخُذُهٗ سِنَةٌ وَّلَا نَوْمٌۗ  لَهٗ مَا فِى السَّمٰوٰتِ وَمَا فِى الْاَرْضِۗ مَنْ ذَا الَّذِيْ يَشْفَعُ عِنْدَهٗٓ اِلَّا بِاِذْنِهٖۗ يَعْلَمُ مَا بَيْنَ اَيْدِيْهِمْ وَمَا خَلْفَهُمْۚ وَلَا يُحِيْطُوْنَ بِشَيْءٍ مِّنْ عِلْمِهٖٓ اِلَّا بِمَا شَآءَۚ وَسِعَ كُرْسِيُّهُ السَّمٰوٰتِ وَالْاَرْضِۚ وَلَا يَـُٔوْدُهٗ حِفْظُهُمَاۚ وَهُوَ الْعَلِيُّ الْعَظِيْمُ",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,

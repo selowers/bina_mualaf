@@ -11,6 +11,7 @@ import 'page/murotal.dart';
 import 'ayat_kursi_page.dart';
 import 'information.dart';
 import 'ringkasan_pencapaian_pembimbing.dart';
+import 'tata_cara_wudhu_page.dart';
 import 'edit_profile_page.dart';
 
 class DashboardPembimbing extends StatefulWidget {
@@ -117,8 +118,10 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                NiatSholat(userId: _currentUser!.id),
+                            builder: (context) => NiatSholat(
+                              userId: _currentUser!.id,
+                              enableCrud: true,
+                            ),
                           ),
                         );
                       },
@@ -129,7 +132,12 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AyatKursi()),
+                          MaterialPageRoute(
+                            builder: (context) => AyatKursi(
+                              userId: _currentUser!.id,
+                              enableCrud: true,
+                            ),
+                          ),
                         );
                       },
                     ),
@@ -144,7 +152,17 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                       },
                     ),
                     buildMenu(
-                      imageAsset: "assets/informasi.png",
+                      imageAsset: "assets/wudu.png",
+                      title: "Tata Cara Wudhu'",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          _createRoute(const TataCaraWudhuPage(enableCrud: true)),
+                        );
+                      },
+                    ),
+                    buildMenu(
+                      imageAsset: "assets/pencapaian.png",
                       title: "Ringkasan Pencapaian",
                       onPressed: () {
                         Navigator.push(
@@ -163,8 +181,10 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                RukunImanIslam(userId: _currentUser!.id),
+                            builder: (context) => RukunImanIslam(
+                              userId: _currentUser!.id,
+                              enableCrud: true,
+                            ),
                           ),
                         );
                       },
@@ -176,8 +196,10 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                DoaKeseharian(userId: _currentUser!.id),
+                            builder: (context) => DoaKeseharian(
+                              userId: _currentUser!.id,
+                              enableCrud: true,
+                            ),
                           ),
                         );
                       },
@@ -189,8 +211,10 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                Murotal(userId: _currentUser!.id),
+                            builder: (context) => Murotal(
+                              userId: _currentUser!.id,
+                              enableCrud: true,
+                            ),
                           ),
                         );
                       },
@@ -283,18 +307,64 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
     );
   }
 
+  Route _createRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position:
+                Tween<Offset>(
+                  begin: const Offset(0.2, 0),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(parent: animation, curve: Curves.easeOut),
+                ),
+            child: child,
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 360),
+    );
+  }
+
+  Color _menuAccentColor(String title) {
+    switch (title) {
+      case 'Niat & Bacaan Sholat':
+        return const Color(0xFFDDE9FF);
+      case 'Ayat Kursi':
+        return const Color(0xFFE8F5E9);
+      case 'Informasi':
+        return const Color(0xFFFFF3E0);
+      case "Tata Cara Wudhu'":
+        return const Color(0xFFE0F7FA);
+      case 'Ringkasan Pencapaian':
+        return const Color(0xFFEDE7F6);
+      case 'Rukun Iman & Islam':
+        return const Color(0xFFFCE4EC);
+      case "Do'a Keseharian":
+        return const Color(0xFFE0F2F1);
+      case 'Murotal':
+        return const Color(0xFFF3E5F5);
+      default:
+        return const Color(0xFFF4F6FF);
+    }
+  }
+
   Widget buildMenu({
     required String imageAsset,
     required String title,
     required VoidCallback onPressed,
   }) {
     final itemWidth = (MediaQuery.of(context).size.width - 56) / 2;
+    final accentColor = _menuAccentColor(title);
     return SizedBox(
       width: itemWidth.clamp(150, 240),
       child: Material(
-        elevation: 5,
+        elevation: 3,
         borderRadius: BorderRadius.circular(22),
-        color: Colors.white,
+        color: accentColor.withOpacity(0.28),
         child: InkWell(
           borderRadius: BorderRadius.circular(22),
           onTap: onPressed,
@@ -307,7 +377,7 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                   height: 92,
                   width: 92,
                   decoration: BoxDecoration(
-                    color: Color(0xFFEAF6FF),
+                    color: accentColor.withOpacity(0.42),
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: Padding(
@@ -322,7 +392,7 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF172B4D),
+                    color: Colors.grey[900],
                   ),
                 ),
                 SizedBox(height: 6),

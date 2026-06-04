@@ -13,7 +13,9 @@ import 'page/doa_keseharian_page.dart';
 import 'page/murotal.dart';
 import 'ayat_kursi_page.dart';
 import 'information.dart';
+import 'tata_cara_wudhu_page.dart';
 import 'edit_profile_page.dart';
+import 'ringkasan_pencapaian_detail.dart';
 
 class DashboardMualaf extends StatefulWidget {
   const DashboardMualaf({super.key});
@@ -32,6 +34,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
     'Rukun Iman & Islam',
     'Doa Keseharian',
     'Murotal',
+    'Wudhu',
   ];
 
   int _achievementChecked = 0;
@@ -58,7 +61,6 @@ class _DashboardMualafState extends State<DashboardMualaf> {
   }
 
   int _countTrue(dynamic value) {
-    
     if (value is bool) {
       return value ? 1 : 0;
     }
@@ -116,6 +118,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
       prefs,
       'ayat_kursi_checked_$userId',
     );
+    final wudhuChecked = await _getCheckedCount(prefs, 'wudhu_checked_$userId');
 
     setState(() {
       _pageTotal = {
@@ -124,6 +127,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
         'Rukun Iman & Islam': rukunTotal,
         'Doa Keseharian': doaTotal,
         'Murotal': murotalTotal,
+        'Wudhu': 1,
       };
       _pageChecked = {
         'Niat & Bacaan Sholat': niatChecked,
@@ -131,6 +135,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
         'Rukun Iman & Islam': rukunChecked,
         'Doa Keseharian': doaChecked,
         'Murotal': murotalChecked,
+        'Wudhu': wudhuChecked,
       };
       _achievementTotal = _pageTotal.values.fold(0, (sum, item) => sum + item);
       _achievementChecked = _pageChecked.values.fold(
@@ -258,6 +263,32 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                       },
                     ),
                     buildMenu(
+                      imageAsset: 'assets/pencapaian.png',
+                      title: 'Ringkasan Pencapaian',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          _createRoute(
+                            RingkasanPencapaianDetail(
+                              calon: _currentUser!,
+                              achievementItems: _achievementItems,
+                              achievementStatus: _buildAchievementStatus(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    buildMenu(
+                      imageAsset: 'assets/wudu.png',
+                      title: "Tata Cara Wudhu'",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          _createRoute(const TataCaraWudhuPage()),
+                        ).then((_) => _loadAchievementProgress());
+                      },
+                    ),
+                    buildMenu(
                       imageAsset: 'assets/suratpendek.png',
                       title: 'Rukun Iman & Islam',
                       onPressed: () {
@@ -368,6 +399,8 @@ class _DashboardMualafState extends State<DashboardMualaf> {
   }
 
   Widget _buildAchievementSection(double progress) {
+    final percent = (progress * 100).round();
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
@@ -391,51 +424,262 @@ class _DashboardMualafState extends State<DashboardMualaf> {
           ),
           const SizedBox(height: 10),
           const Text(
-            'Progres ditentukan dari centang di setiap halaman materi.',
+            'Lihat perkembanganmu dengan grafik interaktif dan ringkasan setiap materi.',
             style: TextStyle(color: Colors.black54),
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 18),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                child: LinearProgressIndicator(
-                  value: progress,
-                  minHeight: 10,
-                  color: const Color(0xFF4A8CF7),
-                  backgroundColor: const Color(0xFFE3F1FF),
+              Container(
+                width: 134,
+                height: 134,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF4A8CF7), Color(0xFF5ED5FF)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(28),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 18,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: CircularProgressIndicator(
+                        value: progress,
+                        strokeWidth: 14,
+                        color: Colors.white,
+                        backgroundColor: Colors.white24,
+                      ),
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '$percent%',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        const Text(
+                          'Dicapai',
+                          style: TextStyle(color: Colors.white70, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(width: 12),
-              Text(
-                '${(progress * 100).round()}%',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A8CF7),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '$_achievementChecked dari $_achievementTotal materi selesai',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    _buildStatItem(
+                      title: 'Materi lengkap',
+                      value: '$_achievementChecked/$_achievementTotal',
+                    ),
+                    _buildStatItem(title: 'Perkembangan', value: '$percent%'),
+                  ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 14),
-          Text(
-            'Selesai $_achievementChecked dari $_achievementTotal kegiatan.',
-            style: const TextStyle(color: Colors.black54),
+          const SizedBox(height: 20),
+          const Text(
+            'Pencapaian per materi',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 16),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
+          const SizedBox(height: 12),
+          ElevatedButton.icon(
+            onPressed: () {
+              Navigator.push(
+                context,
+                _createRoute(
+                  RingkasanPencapaianDetail(
+                    calon: _currentUser!,
+                    achievementItems: _achievementItems,
+                    achievementStatus: _buildAchievementStatus(),
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.timeline, size: 18),
+            label: const Text('Lihat Ringkasan Lengkap'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF4A8CF7),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+              elevation: 0,
+            ),
+          ),
+          const SizedBox(height: 18),
+          Column(
             children: _achievementItems.map((item) {
               final checked = _pageChecked[item] ?? 0;
               final total = _pageTotal[item] ?? 0;
-              return Chip(
-                label: Text('$item: $checked/$total'),
-                backgroundColor: const Color(0xFFF1F8FF),
+              final itemProgress = total == 0 ? 0.0 : checked / total;
+              final itemPercent = (itemProgress * 100).round();
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF7F9FF),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: const Color(0xFFE2E9FF)),
+                  ),
+                  padding: const EdgeInsets.all(14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              item,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 6,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF4A8CF7).withOpacity(0.12),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              '$itemPercent%',
+                              style: const TextStyle(
+                                color: Color(0xFF4A8CF7),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 10,
+                              color: const Color(0xFFE3F1FF),
+                            ),
+                            FractionallySizedBox(
+                              widthFactor: itemProgress.clamp(0.0, 1.0),
+                              child: Container(
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xFF4A8CF7),
+                                      Color(0xFF80D7FF),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Text(
+                            '$checked dari $total langkah',
+                            style: const TextStyle(
+                              color: Colors.black54,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            total == 0
+                                ? 'Belum tersedia'
+                                : itemProgress >= 1.0
+                                ? 'Selesai'
+                                : 'Dalam proses',
+                            style: TextStyle(
+                              color: itemProgress >= 1.0
+                                  ? const Color(0xFF2E7D32)
+                                  : const Color(0xFF4A8CF7),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               );
             }).toList(),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildStatItem({required String title, required String value}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 13, color: Colors.black54),
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF4A8CF7),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Map<String, bool> _buildAchievementStatus() {
+    return {
+      for (final item in _achievementItems)
+        item:
+            (_pageTotal[item] ?? 0) > 0 &&
+            (_pageChecked[item] ?? 0) >= (_pageTotal[item] ?? 0),
+    };
   }
 
   Widget _buildAvatarIcon() {
@@ -455,18 +699,64 @@ class _DashboardMualafState extends State<DashboardMualaf> {
     );
   }
 
+  Route _createRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position:
+                Tween<Offset>(
+                  begin: const Offset(0.2, 0),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(parent: animation, curve: Curves.easeOut),
+                ),
+            child: child,
+          ),
+        );
+      },
+      transitionDuration: const Duration(milliseconds: 360),
+    );
+  }
+
+  Color _menuAccentColor(String title) {
+    switch (title) {
+      case 'Niat & Bacaan Sholat':
+        return const Color(0xFFDDE9FF);
+      case 'Ayat Kursi':
+        return const Color(0xFFE8F5E9);
+      case 'Informasi':
+        return const Color(0xFFFFF3E0);
+      case "Tata Cara Wudhu'":
+        return const Color(0xFFE0F7FA);
+      case 'Ringkasan Pencapaian':
+        return const Color(0xFFEDE7F6);
+      case 'Rukun Iman & Islam':
+        return const Color(0xFFFCE4EC);
+      case "Do'a Keseharian":
+        return const Color(0xFFE0F2F1);
+      case 'Murotal':
+        return const Color(0xFFF3E5F5);
+      default:
+        return const Color(0xFFF4F6FF);
+    }
+  }
+
   Widget buildMenu({
     required String imageAsset,
     required String title,
     required VoidCallback onPressed,
   }) {
     final itemWidth = (MediaQuery.of(context).size.width - 56) / 2;
+    final accentColor = _menuAccentColor(title);
     return SizedBox(
       width: itemWidth.clamp(150, 240),
       child: Material(
-        elevation: 5,
+        elevation: 3,
         borderRadius: BorderRadius.circular(22),
-        color: Colors.white,
+        color: accentColor.withOpacity(0.28),
         child: InkWell(
           borderRadius: BorderRadius.circular(22),
           onTap: onPressed,
@@ -479,7 +769,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                   height: 92,
                   width: 92,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEAF6FF),
+                    color: accentColor.withOpacity(0.42),
                     borderRadius: BorderRadius.circular(24),
                   ),
                   child: Padding(
@@ -491,10 +781,10 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                 Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF172B4D),
+                    color: Colors.grey[900],
                   ),
                 ),
                 const SizedBox(height: 6),

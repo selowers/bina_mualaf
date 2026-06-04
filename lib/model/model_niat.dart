@@ -14,4 +14,12 @@ class ModelNiat {
     latin = json['latin'];
     terjemahan = json['terjemahan'];
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'arabic': arabic,
+        'latin': latin,
+        'terjemahan': terjemahan,
+      };
 }
