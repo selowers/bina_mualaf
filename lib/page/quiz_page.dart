@@ -48,15 +48,25 @@ class _QuizPageState extends State<QuizPage> {
     final completed = prefs.getBool('quiz_completed_${widget.userId}') ?? false;
     if (completed) {
       final savedScore = prefs.getInt('quiz_score_${widget.userId}') ?? 0;
-      final categoryJson = prefs.getString('quiz_category_correct_${widget.userId}');
-      final answersJson = prefs.getString('quiz_selected_answers_${widget.userId}');
+      final categoryJson = prefs.getString(
+        'quiz_category_correct_${widget.userId}',
+      );
+      final answersJson = prefs.getString(
+        'quiz_selected_answers_${widget.userId}',
+      );
       final categoryData = <String, int>{};
 
       _selectedAnswers = List<int?>.filled(_questions.length, null);
       if (answersJson != null) {
         final decodedAnswers = json.decode(answersJson) as List<dynamic>;
-        for (var i = 0; i < decodedAnswers.length && i < _selectedAnswers.length; i++) {
-          _selectedAnswers[i] = decodedAnswers[i] == null ? null : decodedAnswers[i] as int;
+        for (
+          var i = 0;
+          i < decodedAnswers.length && i < _selectedAnswers.length;
+          i++
+        ) {
+          _selectedAnswers[i] = decodedAnswers[i] == null
+              ? null
+              : decodedAnswers[i] as int;
         }
       }
 
@@ -197,7 +207,9 @@ class _QuizPageState extends State<QuizPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: isCompleted ? _buildCompletionView(context) : _buildQuestionView(context),
+          child: isCompleted
+              ? _buildCompletionView(context)
+              : _buildQuestionView(context),
         ),
       ),
     );
@@ -256,8 +268,8 @@ class _QuizPageState extends State<QuizPage> {
                   color: showCorrect
                       ? const Color(0xFFDFF8E1)
                       : showIncorrect
-                          ? const Color(0xFFFFEBEE)
-                          : Colors.white,
+                      ? const Color(0xFFFFEBEE)
+                      : Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(16),
@@ -270,14 +282,19 @@ class _QuizPageState extends State<QuizPage> {
                       child: Row(
                         children: [
                           Icon(
-                            selected ? Icons.radio_button_checked : Icons.radio_button_off,
+                            selected
+                                ? Icons.radio_button_checked
+                                : Icons.radio_button_off,
                             color: selected ? Colors.blue : Colors.black45,
                           ),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
                               option,
-                              style: const TextStyle(fontSize: 15, color: Colors.black87),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.black87,
+                              ),
                             ),
                           ),
                         ],
@@ -308,7 +325,9 @@ class _QuizPageState extends State<QuizPage> {
           children: [
             Expanded(
               child: ElevatedButton(
-                onPressed: _showFeedback ? _nextQuestion : (_selectedOptionIndex != null ? _submitAnswer : null),
+                onPressed: _showFeedback
+                    ? _nextQuestion
+                    : (_selectedOptionIndex != null ? _submitAnswer : null),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4A8CF7),
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -349,7 +368,9 @@ class _QuizPageState extends State<QuizPage> {
                 Icon(
                   _hasPassed ? Icons.check_circle_outline : Icons.error_outline,
                   size: 72,
-                  color: _hasPassed ? const Color(0xFF4A8CF7) : Colors.redAccent,
+                  color: _hasPassed
+                      ? const Color(0xFF4A8CF7)
+                      : Colors.redAccent,
                 ),
                 const SizedBox(height: 24),
                 const Text(
@@ -438,7 +459,10 @@ class _QuizPageState extends State<QuizPage> {
                   Expanded(
                     child: Text(
                       name,
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Text(

@@ -269,7 +269,10 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => QuizPage(userId: _currentUser!.id)),
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                QuizPage(userId: _currentUser!.id),
+                          ),
                         );
                       },
                     ),
@@ -717,12 +720,13 @@ class _DashboardMualafState extends State<DashboardMualaf> {
         return FadeTransition(
           opacity: animation,
           child: SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0.2, 0),
-              end: Offset.zero,
-            ).animate(
-              CurvedAnimation(parent: animation, curve: Curves.easeOut),
-            ),
+            position:
+                Tween<Offset>(
+                  begin: const Offset(0.2, 0),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(parent: animation, curve: Curves.easeOut),
+                ),
             child: child,
           ),
         );

@@ -34,12 +34,7 @@ const List<QuizQuestion> quizQuestions = [
   QuizQuestion(
     category: 'Niat & Bacaan Sholat',
     question: 'Bacaan iftitah biasanya dibaca setelah?',
-    options: [
-      'Takbiratul ihram',
-      'Ruku',
-      'Setelah salam',
-      'Sebelum sujud',
-    ],
+    options: ['Takbiratul ihram', 'Ruku', 'Setelah salam', 'Sebelum sujud'],
     correctIndex: 0,
   ),
   QuizQuestion(
@@ -181,7 +176,12 @@ const List<QuizQuestion> quizQuestions = [
   QuizQuestion(
     category: 'Murotal',
     question: 'Surat Al-Fatihah dikenal sebagai?',
-    options: ['Surat pembuka', 'Surat perang', 'Surat terakhir', 'Surat panjang'],
+    options: [
+      'Surat pembuka',
+      'Surat perang',
+      'Surat terakhir',
+      'Surat panjang',
+    ],
     correctIndex: 0,
   ),
   QuizQuestion(
@@ -193,29 +193,24 @@ const List<QuizQuestion> quizQuestions = [
   QuizQuestion(
     category: 'Murotal',
     question: 'Surat Ali Imran berkaitan dengan?',
-    options: ['Keluarga Imran', 'Dua kali sujud', 'Surat pendek', 'Surat panjang'],
+    options: [
+      'Keluarga Imran',
+      'Dua kali sujud',
+      'Surat pendek',
+      'Surat panjang',
+    ],
     correctIndex: 0,
   ),
   QuizQuestion(
     category: 'Murotal',
     question: 'Surat An-Nisa berarti?',
-    options: [
-      'Wanita',
-      'Air',
-      'Langit',
-      'Keluarga',
-    ],
+    options: ['Wanita', 'Air', 'Langit', 'Keluarga'],
     correctIndex: 0,
   ),
   QuizQuestion(
     category: 'Murotal',
     question: 'Surat Al-Ma’idah memiliki arti?',
-    options: [
-      'Jamuan',
-      'Perjalanan',
-      'Pertempuran',
-      'Rahmat',
-    ],
+    options: ['Jamuan', 'Perjalanan', 'Pertempuran', 'Rahmat'],
     correctIndex: 0,
   ),
 ];

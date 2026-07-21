@@ -10,7 +10,8 @@ class QuizReviewPembimbingPage extends StatefulWidget {
   const QuizReviewPembimbingPage({super.key});
 
   @override
-  State<QuizReviewPembimbingPage> createState() => _QuizReviewPembimbingPageState();
+  State<QuizReviewPembimbingPage> createState() =>
+      _QuizReviewPembimbingPageState();
 }
 
 class _QuizReviewPembimbingPageState extends State<QuizReviewPembimbingPage> {
@@ -34,7 +35,9 @@ class _QuizReviewPembimbingPageState extends State<QuizReviewPembimbingPage> {
     for (final calon in users) {
       final completed = prefs.getBool('quiz_completed_${calon.id}') ?? false;
       final score = prefs.getInt('quiz_score_${calon.id}') ?? 0;
-      final String? answersJson = prefs.getString('quiz_selected_answers_${calon.id}');
+      final String? answersJson = prefs.getString(
+        'quiz_selected_answers_${calon.id}',
+      );
       final selectedAnswers = List<int?>.filled(quizQuestions.length, null);
       if (answersJson != null) {
         final decoded = json.decode(answersJson) as List<dynamic>;
@@ -44,12 +47,14 @@ class _QuizReviewPembimbingPageState extends State<QuizReviewPembimbingPage> {
         }
       }
 
-      results.add(QuizResultSummary(
-        calon: calon,
-        completed: completed,
-        score: score,
-        selectedAnswers: selectedAnswers,
-      ));
+      results.add(
+        QuizResultSummary(
+          calon: calon,
+          completed: completed,
+          score: score,
+          selectedAnswers: selectedAnswers,
+        ),
+      );
     }
 
     results.sort((a, b) {
@@ -75,7 +80,9 @@ class _QuizReviewPembimbingPageState extends State<QuizReviewPembimbingPage> {
             return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
-            return Center(child: Text('Gagal memuat hasil quiz: ${snapshot.error}'));
+            return Center(
+              child: Text('Gagal memuat hasil quiz: ${snapshot.error}'),
+            );
           }
 
           final results = snapshot.data ?? [];
@@ -112,9 +119,8 @@ class _QuizReviewPembimbingPageState extends State<QuizReviewPembimbingPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => QuizReviewDetailPage(
-                              summary: result,
-                            ),
+                            builder: (context) =>
+                                QuizReviewDetailPage(summary: result),
                           ),
                         );
                       }
@@ -299,7 +305,9 @@ class QuizReviewDetailPage extends StatelessWidget {
                     const SizedBox(height: 12),
                     if (summary.completed)
                       Text(
-                        summary.passed ? 'Status: Lulus' : 'Status: Tidak lulus',
+                        summary.passed
+                            ? 'Status: Lulus'
+                            : 'Status: Tidak lulus',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -330,10 +338,14 @@ class QuizReviewDetailPage extends StatelessWidget {
                   margin: const EdgeInsets.only(bottom: 14),
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    color: isCorrect ? const Color(0xFFF2F8F3) : const Color(0xFFFFF1F1),
+                    color: isCorrect
+                        ? const Color(0xFFF2F8F3)
+                        : const Color(0xFFFFF1F1),
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: isCorrect ? const Color(0xFF2E7D32) : const Color(0xFFD32F2F),
+                      color: isCorrect
+                          ? const Color(0xFF2E7D32)
+                          : const Color(0xFFD32F2F),
                       width: 0.5,
                     ),
                   ),
@@ -349,7 +361,9 @@ class QuizReviewDetailPage extends StatelessWidget {
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: isCorrect ? const Color(0xFF2E7D32) : const Color(0xFFD32F2F),
+                              color: isCorrect
+                                  ? const Color(0xFF2E7D32)
+                                  : const Color(0xFFD32F2F),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
@@ -382,7 +396,9 @@ class QuizReviewDetailPage extends StatelessWidget {
                       Text(
                         isCorrect ? 'Benar' : 'Salah',
                         style: TextStyle(
-                          color: isCorrect ? const Color(0xFF2E7D32) : const Color(0xFFD32F2F),
+                          color: isCorrect
+                              ? const Color(0xFF2E7D32)
+                              : const Color(0xFFD32F2F),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
