@@ -163,7 +163,7 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ayat Kursi'),
-        backgroundColor: const Color(0xff0e1446),
+        backgroundColor: const Color(0xFFE0F7FA),
         actions: [
           if (widget.enableCrud)
             IconButton(
@@ -204,38 +204,38 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
             ),
         ],
       ),
-      backgroundColor: const Color(0xff44aca0),
-      floatingActionButton: widget.enableCrud
-          ? FloatingActionButton.extended(
-              onPressed: _openAyatEditDialog,
-              label: const Text('Tambah / Ubah'),
-              icon: const Icon(Icons.add),
-              backgroundColor: const Color(0xff0e1446),
-            )
-          : null,
+      backgroundColor: const Color(0xFFE0F7FA),
+      // floatingActionButton: widget.enableCrud
+      //     ? FloatingActionButton.extended(
+      //         onPressed: _openAyatEditDialog,
+      //         label: const Text('Tambah / Ubah'),
+      //         icon: const Icon(Icons.add),
+      //         backgroundColor: const Color(0xff0e1446),
+      //       )
+      //     : null,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Stack(
               children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Color.fromARGB(255, 34, 26, 148),
-                    ),
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.topLeft,
+                //   child: IconButton(
+                //     onPressed: () => Navigator.of(context).pop(),
+                //     icon: const Icon(
+                //       Icons.arrow_back,
+                //       color: Color.fromARGB(255, 34, 26, 148),
+                //     ),
+                //   ),
+                // ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Container(
                     margin: const EdgeInsets.only(top: 80),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: const Color(0xffb4ddd9),
+                      color: const Color(0xFFB2EBF2),
                     ),
                     height: 200,
                     width: MediaQuery.of(context).size.width,
@@ -250,7 +250,7 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
                           const Text(
                             "Ayat Kursi",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color.fromARGB(255, 255, 255, 255),
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -258,7 +258,7 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
                           const Text(
                             "Bacaan Ayat Kursi dengan tafsirnya",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Color.fromARGB(255, 255, 255, 255),
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
@@ -363,7 +363,7 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
                                 style: TextStyle(
                                   letterSpacing: 2,
                                   fontSize: 18,
-                                  color: Colors.white,
+                                  color: const Color.fromARGB(255, 255, 255, 255),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -385,7 +385,7 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
                       child: Text(
                         "بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: const Color.fromARGB(255, 0, 0, 0),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -395,7 +395,7 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
                       child: Text(
                         "Dengan menyebut nama Allah Yang Maha Pemurah lagi Maha Penyayang",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: const Color.fromARGB(255, 0, 0, 0),
                           fontSize: 12,
                           fontStyle: FontStyle.italic,
                         ),
@@ -405,7 +405,7 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
                     SelectableText(
                       "اَللّٰهُ لَآ اِلٰهَ اِلَّا هُوَۚ اَلْحَيُّ الْقَيٌّوْمُ ەۚ لَا تَأْخُذُهٗ سِنَةٌ وَّلَا نَوْمٌۗ  لَهٗ مَا فِى السَّمٰوٰتِ وَمَا فِى الْاَرْضِۗ مَنْ ذَا الَّذِيْ يَشْفَعُ عِنْدَهٗٓ اِلَّا بِاِذْنِهٖۗ يَعْلَمُ مَا بَيْنَ اَيْدِيْهِمْ وَمَا خَلْفَهُمْۚ وَلَا يُحِيْطُوْنَ بِشَيْءٍ مِّنْ عِلْمِهٖٓ اِلَّا بِمَا شَآءَۚ وَسِعَ كُرْسِيُّهُ السَّمٰوٰتِ وَالْاَرْضِۚ وَلَا يَـُٔوْدُهٗ حِفْظُهُمَاۚ وَهُوَ الْعَلِيُّ الْعَظِيْمُ",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: const Color.fromARGB(255, 0, 0, 0),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -417,7 +417,7 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
                       child: SelectableText(
                         "Allaahu laa ilaaha illaa huwal hayyul qoyyuum, laa ta’khudzuhuu sinatuw walaa naum. Lahuu maa fissamaawaati wa maa fil ardli man dzal ladzii yasyfa’u ‘indahuu illaa biidznih, ya’lamu maa baina aidiihim wamaa kholfahum wa laa yuhiithuuna bisyai’im min ‘ilmihii illaa bimaa syaa’ wasi’a kursiyyuhus samaawaati wal ardlo walaa ya’uuduhuu hifdhuhumaa wahuwal ‘aliyyul ‘adhiim.",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: const Color.fromARGB(255, 0, 0, 0),
                           fontSize: 12,
                           fontStyle: FontStyle.italic,
                         ),
@@ -429,7 +429,7 @@ Karena Allah tidak pernah mengantuk, sudah tentu Dia tidak pernah tidur, karena 
                       margin: const EdgeInsets.only(left: 10, right: 10),
                       child: SelectableText(
                         "Terjemahan : Allah, tidak ada tuhan selain dia. Yang Mahahidup, Yang terus menerus mengurus (makhluk-Nya), tidak mengantuk dan tidak tidur. Milik-Nya apa yang ada di langit dan apa yang ada di bumi. Tidak ada yang dapat memberi syafaat di sisi-Nya tanpa izin-Nya. Dia mengetahui apa yang di hadapan mereka dan apa yang di belakang mereka, dan mereka tidak mengetahui sesuatu apa pun tentang ilmu-Nya melainkan apa yang Dia kehendaki. Kursi-Nya meliputi langit dan bumi. Dan Dia tidak merasa berat memelihara keduanya, dan Dia Mahatinggi, Mahabesar.",
-                        style: TextStyle(color: Colors.white, fontSize: 14),
+                        style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0), fontSize: 14),
                         textAlign: TextAlign.justify,
                       ),
                     ),

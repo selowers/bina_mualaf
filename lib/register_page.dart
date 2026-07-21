@@ -57,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.green.shade300, Colors.green.shade700],
+            colors: [Color.fromARGB(255, 100, 144, 226), Color.fromARGB(255, 100, 144, 226)],
           ),
         ),
         child: Center(
@@ -76,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Icon(
                       Icons.person_add,
                       size: 80,
-                      color: Colors.green.shade700,
+                      color: const Color.fromARGB(255, 100, 144, 226),
                     ),
                     SizedBox(height: 20),
                     Text(
@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.green.shade800,
+                        color: const Color.fromARGB(255, 100, 144, 226),
                       ),
                     ),
                     Text(
@@ -101,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelText: 'Nama Lengkap',
                         prefixIcon: Icon(
                           Icons.person,
-                          color: Colors.green.shade600,
+                          color: const Color.fromARGB(255, 100, 144, 226),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -117,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelText: 'Email',
                         prefixIcon: Icon(
                           Icons.email,
-                          color: Colors.green.shade600,
+                          color: const Color.fromARGB(255, 100, 144, 226),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -134,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelText: 'Password',
                         prefixIcon: Icon(
                           Icons.lock,
-                          color: Colors.green.shade600,
+                          color: const Color.fromARGB(255, 100, 144, 226),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -189,7 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ElevatedButton(
                       onPressed: _register,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green.shade600,
+                        backgroundColor: const Color.fromARGB(255, 100, 144, 226),
                         padding: EdgeInsets.symmetric(
                           horizontal: 50,
                           vertical: 15,
@@ -208,7 +208,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () => Navigator.pop(context),
                       child: Text(
                         'Kembali ke Login',
-                        style: TextStyle(color: Colors.green.shade600),
+                        style: TextStyle(color: Color.fromARGB(255, 100, 144, 226)),
                       ),
                     ),
                   ],

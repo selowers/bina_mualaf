@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.green.shade300, Colors.green.shade700],
+            colors: [const Color.fromARGB(255, 110, 203, 231), Color.fromARGB(255, 110, 203, 231)],
           ),
         ),
         child: Center(
@@ -88,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                     Icon(
                       Icons.account_circle,
                       size: 80,
-                      color: Colors.green.shade700,
+                      color: const Color.fromARGB(255, 100, 144, 226),
                     ),
                     SizedBox(height: 20),
                     Text(
@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.green.shade800,
+                        color: const Color.fromARGB(255, 100, 144, 226),
                       ),
                     ),
                     Text(
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: 'Email',
                         prefixIcon: Icon(
                           Icons.email,
-                          color: Colors.green.shade600,
+                          color: Color.fromARGB(255, 100, 144, 226),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: 'Password',
                         prefixIcon: Icon(
                           Icons.lock,
-                          color: Colors.green.shade600,
+                          color: const Color.fromARGB(255, 100, 144, 226),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: _login,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green.shade600,
+                        backgroundColor: const Color.fromARGB(255, 100, 144, 226),
                         padding: EdgeInsets.symmetric(
                           horizontal: 50,
                           vertical: 15,
@@ -185,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             'Daftar',
-                            style: TextStyle(color: Colors.green.shade600),
+                            style: TextStyle(color: Color.fromARGB(255, 100, 144, 226)),
                           ),
                         ),
                         Text(' | ', style: TextStyle(color: Colors.grey)),
@@ -200,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           child: Text(
                             'Lupa Password',
-                            style: TextStyle(color: Colors.green.shade600),
+                            style: TextStyle(color: Color.fromARGB(255, 100, 144, 226)),
                           ),
                         ),
                       ],
@@ -216,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: Text(
                         'Ganti Password',
-                        style: TextStyle(color: Colors.green.shade700),
+                        style: TextStyle(color: Color.fromARGB(255, 100, 144, 226)),
                       ),
                     ),
                   ],

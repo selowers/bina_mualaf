@@ -410,9 +410,9 @@ class _InformasiState extends State<Informasi> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color(0xff44aca0),
+      backgroundColor: const Color(0xFFE0F7FA),
       appBar: AppBar(
-        backgroundColor: const Color(0xff318c7b),
+        backgroundColor: const Color(0xFFE0F7FA),
         title: Text(
           _currentUser!.role == 'pembimbing'
               ? 'Konsultasi - ${_currentUser!.nama}'
@@ -616,7 +616,7 @@ class _InformasiState extends State<Informasi> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                colors: [Color(0xff318c7b), Color(0xff5bd4c9)],
+                colors: [Color(0xFFB2EBF2), Color(0xff5bd4c9)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),

@@ -192,7 +192,7 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF3E0),
+      backgroundColor: const Color(0xFFE0F7FA),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -203,7 +203,7 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                   alignment: Alignment.topLeft,
                   child: IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 15, 15, 15)),
                   ),
                 ),
                 Align(
@@ -212,7 +212,7 @@ class _RukunImanIslamState extends State<RukunImanIslam> {
                     margin: const EdgeInsets.only(top: 80),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: const Color(0xFFFBE9E7),
+                      color: const Color(0xFFB2EBF2),
                     ),
                     height: 200,
                     width: MediaQuery.of(context).size.width,

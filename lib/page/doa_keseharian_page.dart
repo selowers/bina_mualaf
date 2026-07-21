@@ -177,7 +177,7 @@ class _DoaKeseharianState extends State<DoaKeseharian> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8EAFB),
+      backgroundColor: const Color(0xFFE0F7FA),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +188,7 @@ class _DoaKeseharianState extends State<DoaKeseharian> {
                   alignment: Alignment.topLeft,
                   child: IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 0, 0, 0)),
                   ),
                 ),
                 Align(
@@ -197,7 +197,7 @@ class _DoaKeseharianState extends State<DoaKeseharian> {
                     margin: const EdgeInsets.only(top: 80),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: const Color(0xFFF5D0EB),
+                      color: const Color(0xFFB2EBF2),
                     ),
                     height: 200,
                     width: MediaQuery.of(context).size.width,

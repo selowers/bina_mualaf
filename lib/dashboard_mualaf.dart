@@ -11,6 +11,7 @@ import 'niat_sholat_page.dart';
 import 'page/rukun_iman_islam_page.dart';
 import 'page/doa_keseharian_page.dart';
 import 'page/murotal.dart';
+import 'page/quiz_page.dart';
 import 'ayat_kursi_page.dart';
 import 'information.dart';
 import 'tata_cara_wudhu_page.dart';
@@ -166,7 +167,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text('Dashboard Calon Mualaf'),
+        title: const Text('Dashboard Mualaf'),
         actions: [
           PopupMenuButton<String>(
             tooltip: 'Akun',
@@ -260,6 +261,16 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                           context,
                           MaterialPageRoute(builder: (context) => Informasi()),
                         ).then((_) => _loadAchievementProgress());
+                      },
+                    ),
+                    buildMenu(
+                      imageAsset: 'assets/pencapaian.png',
+                      title: 'Quiz',
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => QuizPage(userId: _currentUser!.id)),
+                        );
                       },
                     ),
                     buildMenu(
@@ -706,13 +717,12 @@ class _DashboardMualafState extends State<DashboardMualaf> {
         return FadeTransition(
           opacity: animation,
           child: SlideTransition(
-            position:
-                Tween<Offset>(
-                  begin: const Offset(0.2, 0),
-                  end: Offset.zero,
-                ).animate(
-                  CurvedAnimation(parent: animation, curve: Curves.easeOut),
-                ),
+            position: Tween<Offset>(
+              begin: const Offset(0.2, 0),
+              end: Offset.zero,
+            ).animate(
+              CurvedAnimation(parent: animation, curve: Curves.easeOut),
+            ),
             child: child,
           ),
         );
@@ -729,6 +739,8 @@ class _DashboardMualafState extends State<DashboardMualaf> {
         return const Color(0xFFE8F5E9);
       case 'Informasi':
         return const Color(0xFFFFF3E0);
+      case 'Quiz':
+        return const Color(0xFFFFF9C4);
       case "Tata Cara Wudhu'":
         return const Color(0xFFE0F7FA);
       case 'Ringkasan Pencapaian':

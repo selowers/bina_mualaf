@@ -8,6 +8,7 @@ import 'niat_sholat_page.dart';
 import 'page/rukun_iman_islam_page.dart';
 import 'page/doa_keseharian_page.dart';
 import 'page/murotal.dart';
+import 'page/quiz_review_pembimbing.dart';
 import 'ayat_kursi_page.dart';
 import 'information.dart';
 import 'ringkasan_pencapaian_pembimbing.dart';
@@ -172,6 +173,19 @@ class _DashboardPembimbingState extends State<DashboardPembimbing> {
                           MaterialPageRoute(
                             builder: (context) =>
                                 const RingkasanPencapaianPembimbing(),
+                          ),
+                        );
+                      },
+                    ),
+                    buildMenu(
+                      imageAsset: "assets/quiz.png",
+                      title: "Hasil Quiz Calon",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const QuizReviewPembimbingPage(),
                           ),
                         );
                       },

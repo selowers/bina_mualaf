@@ -210,7 +210,7 @@ class _MurotalState extends State<Murotal> {
                   alignment: Alignment.topLeft,
                   child: IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 0, 0, 0)),
                   ),
                 ),
                 Align(
