@@ -264,7 +264,7 @@ class _DashboardMualafState extends State<DashboardMualaf> {
                       },
                     ),
                     buildMenu(
-                      imageAsset: 'assets/pencapaian.png',
+                      imageAsset: 'assets/quiz.png',
                       title: 'Quiz',
                       onPressed: () {
                         Navigator.push(
